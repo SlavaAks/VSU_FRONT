@@ -18,23 +18,24 @@ const ContentCreateScreen = (props) => {
         // If file selected then create FormData
         const fileToUpload = singleFile;
         const data = new FormData();
-        data.append('name', 'Image Upload');
-        data.append('file_attachment', fileToUpload);
+        data.append('title', title);
+        data.append('file', fileToUpload[0]);
+        data.append('content_type',"file")
         // Please change file upload URL
-        let res = await fetch(
-          'http://localhost/upload.php',
-          {
-            method: 'post',
-            body: data,
-            headers: {
-              'Content-Type': 'multipart/form-data; ',
-            },
+        let config = {
+          headers: {
+            'Content-Type': 'multipart/form-data; ',
           }
-        );
-        let responseJson = await res.json();
-        if (responseJson.status == 1) {
-          alert('Upload Successful');
         }
+
+        let res = $api.post("api/course/module/3/content/",data,config).then(
+          res=>{ if (res.status == 1) {
+            alert('Upload Successful');}
+          }
+        ).catch(err=>console.log(err))
+        console.log()
+
+
       } else {
         // If no file selected the show alert
         alert('Please Select File first');
@@ -42,10 +43,35 @@ const ContentCreateScreen = (props) => {
     };
   
     const selectFile = async () => {
-      
-
+      // Opening Document Picker to select one file
+      try {
+        const res = await DocumentPicker.pick({
+          // Provide which type of file you want user to pick
+          type: [DocumentPicker.types.allFiles],
+          // There can me more options as well
+          // DocumentPicker.types.allFiles
+          // DocumentPicker.types.images
+          // DocumentPicker.types.plainText
+          // DocumentPicker.types.audio
+          // DocumentPicker.types.pdf
+        });
+        // Printing the log realted to the file
+        console.log('res : ' + JSON.stringify(res));
+        // Setting the state to show single file attributes
+        setSingleFile(res);
+      } catch (err) {
+        setSingleFile(null);
+        // Handling any exception (If any)
+        if (DocumentPicker.isCancel(err)) {
+          // If user canceled the document selection
+          alert('Canceled');
+        } else {
+          // For Unknown Error
+          alert('Unknown Error: ' + JSON.stringify(err));
+          throw err;
+        }
+      }
     };
-
 
     console.log(props.route.params.content_type)
 
@@ -97,13 +123,13 @@ const ContentCreateScreen = (props) => {
       {/*Showing the data of selected Single file*/}
       {singleFile != null ? (
         <Text style={styles.textStyle}>
-          File Name: {singleFile.name ? singleFile.name : ''}
+          File Name: {singleFile[0].name ? singleFile[0].name:''}
           {'\n'}
-          Type: {singleFile.type ? singleFile.type : ''}
+          Type: {singleFile[0].type ? singleFile[0].type : ''}
           {'\n'}
-          File Size: {singleFile.size ? singleFile.size : ''}
+          File Size: {singleFile[0].size ? singleFile[0].size : ''}
           {'\n'}
-          URI: {singleFile.uri ? singleFile.uri : ''}
+          URI: {singleFile[0].uri ? singleFile[0].uri : ''}
           {'\n'}
         </Text>
       ) : null}
