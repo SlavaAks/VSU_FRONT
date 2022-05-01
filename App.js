@@ -28,14 +28,15 @@
  import SupportScreen from './screens/SupportScreen';
  import SettingsScreen from './screens/SettingsScreen';
  import BookmarkScreen from './screens/BookmarkScreen';
- import ContentCreateScreen from './screens/ContentCreateScreen'
+ import ContentCreateScreen from './screens/content/ContentCreateScreen';
  
  import { AuthContext } from './components/context';
  
  import RootStackScreen from './screens/RootStackScreen';
  
  import AsyncStorage from '@react-native-community/async-storage';
- import AddContenScreen from './screens/AddContentScreen';
+ import AddContenScreen from './screens/content/AddContentScreen';
+import CourseScreenMine from './screens/CourseScreenMine';
  
  const Drawer = createDrawerNavigator();
  
@@ -183,7 +184,8 @@
          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} userdata={loginState.user}/>}>
        { JSON.parse(loginState.user).groups[0] ==2 ?(
            <Drawer.Screen name="HomeDrawer" component={MainTabScreen}/>):
-           <Drawer.Screen name="TeacherScreen" component={AddContenScreen} />}
+           <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />}
+           
            <Drawer.Screen name="ContentCreateScreen" component={ContentCreateScreen}/>
            <Drawer.Screen name="SupportScreen" component={SupportScreen} />
            <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />

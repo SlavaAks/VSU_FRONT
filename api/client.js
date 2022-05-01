@@ -15,15 +15,14 @@ const $api = axios.create({
     baseURL: API_URL
 })
 
-$api.interceptors.request.use((config) => {
-    // AsyncStorage.getItem('userToken').then((userToken) => {
+$api.interceptors.request.use(async (config) => {
+    //  AsyncStorage.getItem('userToken').then((userToken) => {
        
       
-            config.headers = {Authorization : `Bearer ${"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImFrczhzbGF2YUBtYWlsLnJ1IiwiZXhwIjoxNjUxMDQ5MTM1LCJlbWFpbCI6ImFrczhzbGF2YUBtYWlsLnJ1In0.9ebX1bvLcpwD6u0hMkW3lQRkNgNbIH2jWqA5O2mmcZ0"}`}
+            config.headers = {Authorization : `Bearer ${await AsyncStorage.getItem('userToken')}`}
             return config;
-
         
-    // });
+    //  });
 
 });
 

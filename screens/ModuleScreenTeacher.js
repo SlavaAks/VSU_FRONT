@@ -1,27 +1,19 @@
-import React,{useState} from 'react';
+import React from 'react';
 import { View, Text, Button, StyleSheet } from 'react-native';
-import { Searchbar } from 'react-native-paper';
 
-const ExploreScreen = () => {
-    [query,setQuery]=useState()
+const ModuleScreenTeacher = () => {
     return (
       <View style={styles.container}>
-        <Text>ExploreScreen</Text>
+        <Text>ModuleScreenTeacher</Text>
         <Button
           title="Click Here"
           onPress={() => alert('Button Clicked!')}
         />
-        <Searchbar
-        placeholder="Search"
-        onChangeText={q => { setQuery(q) }}
-        value={query}
-      />
       </View>
-
     );
 };
 
-export default ExploreScreen;
+export default ModuleScreenTeacher;
 
 const styles = StyleSheet.create({
   container: {

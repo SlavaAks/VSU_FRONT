@@ -1,14 +1,16 @@
 import React, { useEffect,useState } from 'react';
 import { View, Text, Button, StyleSheet ,SafeAreaView,FlatList} from 'react-native';
-import $api from "../api/client";
-import Mybutton from '../components/Mybutton';
+import $api from '../../api/client';
+import Mybutton from '../../components/Mybutton';
 
 
 const AddContenScreen = (props) => {
+    [module,setModule]=useState(props.route.params.module)
+
 
     const [items,setItems]=useState([])
     useEffect(()=>{
-    const resp=$api.get('api/course/module/7/content/')
+    const resp=$api.get(`api/course/module/${module}/content/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
     console.log(items)
 
@@ -33,6 +35,7 @@ const AddContenScreen = (props) => {
       return (
         <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
           <Text>{item.item.title}</Text>
+          <Text>{item.item.item}</Text>
           <Mybutton
             title="edit"
             customClick={() => props.navigation.navigate('Lesson', {sub, type})}
