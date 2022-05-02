@@ -9,6 +9,7 @@ function CourseButtonEdite(props) {
         <TouchableOpacity
           onPress={props.Click}
           style={styles.button}
+          onLongPress={props.drag}
         >
           <View style={styles.imageRow}>
             <Image

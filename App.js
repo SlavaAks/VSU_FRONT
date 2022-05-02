@@ -37,6 +37,7 @@
  import AsyncStorage from '@react-native-community/async-storage';
  import AddContenScreen from './screens/content/AddContentScreen';
 import CourseScreenMine from './screens/CourseScreenMine';
+import ModuleScreenTeacher from './screens/ModuleScreenTeacher';
  
  const Drawer = createDrawerNavigator();
  
@@ -186,6 +187,8 @@ import CourseScreenMine from './screens/CourseScreenMine';
            <Drawer.Screen name="HomeDrawer" component={MainTabScreen}/>):
            <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />}
            
+           <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher}/>
+           <Drawer.Screen name="ContentScreenTeacher" component={AddContenScreen}/>
            <Drawer.Screen name="ContentCreateScreen" component={ContentCreateScreen}/>
            <Drawer.Screen name="SupportScreen" component={SupportScreen} />
            <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />

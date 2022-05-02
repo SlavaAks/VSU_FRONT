@@ -10,8 +10,8 @@ const ContentCreateScreen = (props) => {
   // console.log(content_type['content_type'])
     return ( 
       <View style={styles.container}>
-          {props.route.params.content_type=="text" && <AddText/>}
-          {props.route.params.content_type=="file" && <AddFile/>}
+          {props.route.params.content_type=="text" && <AddText navigation={props.navigation} module={props.route.params.module}/>}
+          {props.route.params.content_type=="file" && <AddFile navigation={props.navigation} module={props.route.params.module}/>}
         </View>
     );
 };

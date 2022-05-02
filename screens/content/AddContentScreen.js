@@ -10,12 +10,13 @@ const AddContenScreen = (props) => {
 
     const [items,setItems]=useState([])
     useEffect(()=>{
-    const resp=$api.get(`api/course/module/${module}/content/`)
+    console.log(props.route.params.module)
+    const resp=$api.get(`api/course/module/${props.route.params.module}/content/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
     console.log(items)
 
 
-    },[])
+    },[props])
 
    
     let listViewItemSeparator = () => {
@@ -54,11 +55,11 @@ const AddContenScreen = (props) => {
         <SafeAreaView style={{flex: 1}}>
             <Mybutton
             title="text"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"text"})}
+            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"text",module:props.route.params.module})}
           />
           <Mybutton
             title="file"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"file"})}
+            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"file",module:props.route.params.module})}
           />
           <Mybutton
             title="video"

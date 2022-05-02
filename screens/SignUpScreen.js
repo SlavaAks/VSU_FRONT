@@ -9,17 +9,21 @@ import {
     Platform,
     StyleSheet,
     ScrollView,
-    StatusBar
+    StatusBar,
+    Alert
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
+import AuthService from '../services/AuthService';
 
 const SignInScreen = ({navigation}) => {
 
     const [data, setData] = React.useState({
-        username: '',
+        email: '',
+        first_name:'',
+        last_name:'',
         password: '',
         confirm_password: '',
         check_textInputChange: false,
@@ -31,13 +35,13 @@ const SignInScreen = ({navigation}) => {
         if( val.length !== 0 ) {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: true
             });
         } else {
             setData({
                 ...data,
-                username: val,
+                email: val,
                 check_textInputChange: false
             });
         }
@@ -71,6 +75,34 @@ const SignInScreen = ({navigation}) => {
         });
     }
 
+    const  registrationHandle=async ()=>{
+        if(data.email.length==0||data.last_name.length==0||data.first_name.length==0||data.password.length==0){
+            Alert.alert('Wrong Input!', 'Поля не могут быть пустыми', [
+                {text: 'Okay'}
+            ]);
+            return;
+        }
+        if(data.password!=data.confirm_password){
+            Alert.alert('Wrong Input!', 'Пароли не совпадают', [
+                {text: 'Okay'}
+            ]);
+            return;
+        }
+        const post_data={email:data.email,last_name:data.last_name,first_name:data.first_name,password:data.password}
+        const response= await AuthService.registration(post_data)
+        console.log(response)
+        if ( response == undefined ) {
+            Alert.alert('Ошибка','email уже существует', [
+                {text: 'Okay'}
+            ]);
+            return;
+        } else{
+            Alert.alert("Пользователь добавлен")
+            navigation.goBack()
+        }
+
+    }
+
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#009387' barStyle="light-content"/>
@@ -82,15 +114,15 @@ const SignInScreen = ({navigation}) => {
             style={styles.footer}
         >
             <ScrollView>
-            <Text style={styles.text_footer}>Username</Text>
+            <Text style={styles.text_footer}>Email</Text>
             <View style={styles.action}>
                 <FontAwesome 
-                    name="user-o"
+                    name="at"
                     color="#05375a"
                     size={20}
                 />
                 <TextInput 
-                    placeholder="Your Username"
+                    placeholder="Your Email"
                     style={styles.textInput}
                     autoCapitalize="none"
                     onChangeText={(val) => textInputChange(val)}
@@ -108,6 +140,40 @@ const SignInScreen = ({navigation}) => {
                 : null}
             </View>
 
+            <Text style={styles.text_footer}>First name</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                   name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Your first name"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val) =>setData({
+                        ...data,
+                        first_name: val
+                    })}/>
+            </View>
+
+                        <Text style={styles.text_footer}>Your last name</Text>
+            <View style={styles.action}>
+                <FontAwesome 
+                    name="user-o"
+                    color="#05375a"
+                    size={20}
+                />
+                <TextInput 
+                    placeholder="Your surname"
+                    style={styles.textInput}
+                    autoCapitalize="none"
+                    onChangeText={(val)  =>setData({
+                        ...data,
+                        last_name: val
+                    })}
+                />
+            </View>       
             <Text style={[styles.text_footer, {
                 marginTop: 35
             }]}>Password</Text>
@@ -188,7 +254,7 @@ const SignInScreen = ({navigation}) => {
             <View style={styles.button}>
                 <TouchableOpacity
                     style={styles.signIn}
-                    onPress={() => {}}
+                    onPress={registrationHandle}
                 >
                 <LinearGradient
                     colors={['#08d4c4', '#01ab9d']}

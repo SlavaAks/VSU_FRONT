@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,Alert,TouchableOpacity } from 'react-native';
 import Mytextinput from '../../components/Mytextinput';
 import $api from '../../api/client';
 import DocumentPicker from 'react-native-document-picker';
-const AddFile = ({navigation}) => {
+const AddFile = (props) => {
     const [title,setTitle]=useState()
 
     const [singleFile, setSingleFile] = useState(null);
@@ -21,7 +21,8 @@ const AddFile = ({navigation}) => {
           }
         }
 
-        let res = $api.post("api/course/module/3/content/",data,config).then(
+        console.log(props)
+        let res = $api.post(`api/course/module/${props.module}/content/`,data,config).then(
           res=>{ 
             Alert.alert('Upload Successful');
            console.log(props)
@@ -56,7 +57,7 @@ const AddFile = ({navigation}) => {
 
 
 
-
+    console.log(props)
 
     return ( <View style={styles.container}>
        <Mytextinput

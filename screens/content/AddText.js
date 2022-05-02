@@ -10,8 +10,12 @@ const AddText = (props) => {
 
    
     async function TextContentCreate(){
-        var data={title,content:text,content_type}
-        $api.post("api/course/module/3/content/",data).then(resp=>{
+        
+        const data = new FormData();
+        data.append('title', title);
+        data.append('content', text);
+        data.append('content_type',"text")
+        $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>{
             Alert.alert(
                 'Success','Контент добавлен ',
                 [{ text: 'Ok',onPress: () => props.navigation.goBack(),},],{cancelable: false},);
@@ -37,7 +41,7 @@ const AddText = (props) => {
             maxLength={225}
             numberOfLines={5}
             multiline={true}
-            style={{ textAlignVertical: 'top', padding: 10 }} /><Mybutton title="save" customClick={TextContentCreate}/>
+            style={{ textAlignVertical: 'top', padding: 10 }} />
 
 
    <Mybutton title="save" customClick={TextContentCreate}/>
@@ -47,3 +51,9 @@ const AddText = (props) => {
 
 export default AddText;
 
+const styles = StyleSheet.create({
+    container: {
+      flex: 1, 
+      alignItems: 'center', 
+      justifyContent: 'center'
+    },})

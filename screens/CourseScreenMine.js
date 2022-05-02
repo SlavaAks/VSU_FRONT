@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,FlatList,Modal, Alert,ImageBackground} from 'react-native';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import Mybutton from '../components/Mybutton';
@@ -8,7 +8,7 @@ import Mytextinput from '../components/Mytextinput';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
-
+import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 
 const CourseScreenMine = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -55,13 +55,23 @@ const CourseScreenMine = (props) => {
       );
     };
   
-    let listItemView = (item) => {
+    let listItemView = ({ item, drag, isActive }) => {
       // console.log(item.item.item)
+      console.log(item)
+      console.log(drag)
+      console.log(isActive)
       return (
-        <CourseButtonEdite /*Click={props.navigation.navigate("ModuleScreen")}*/ DelClik={()=>{DelClik(item.id)}} title={item.title} overview={item.overview}/>
+        <CourseButtonEdite Click={()=>props.navigation.navigate("ModuleScreenTeacher",{"course":item.id})}
+        DelClik={()=>{DelClik(item.id)}} 
+        drag={drag}
+        title={item.title} overview={item.overview}/>
       );
     };
 
+
+    onMoveEnd = ({ data }) => {
+      setItems(data)
+    }
 
 
       return (
@@ -125,11 +135,14 @@ const CourseScreenMine = (props) => {
     onPress={() => setIsvisibnle(true)}
           />
 
-                <FlatList
+                <DraggableFlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}
                   keyExtractor={(item, index) => index.toString()}
-                  renderItem={({ item }) => listItemView(item)} />
+                  renderItem={ listItemView}
+                  onDragEnd={onMoveEnd}
+                  // onMoveEnd={onMoveEnd}
+                  />
 
 
 
