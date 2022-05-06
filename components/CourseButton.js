@@ -10,18 +10,18 @@ function CourseButton(props) {
       >
         <View style={styles.imageRow}>
           <Image
-            source={require("./assets/book-png-icon-5.png")}
+            source={require("../assets/book-png-icon-5.png")}
             resizeMode="contain"
             style={styles.image}
           ></Image>
           <View style={styles.rect}>
             <View style={styles.group3}>
-              <Text style={styles.loremIpsum}>Lorem Ipsum</Text>
+              <Text style={styles.loremIpsum}>{props.title}</Text>
             </View>
           </View>
         </View>
         <View style={styles.group2}>
-          <Text style={styles.loremIpsum3}>Lorem Ipsum</Text>
+          <Text style={styles.loremIpsum3}>{props.overview}</Text>
         </View>
       </TouchableOpacity>
     </View>

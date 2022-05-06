@@ -9,20 +9,24 @@ import HomeScreen from './HomeScreen';
 import DetailsScreen from './DetailsScreen';
 import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
+import CourseScreenMine from './CourseScreenMine';
 
 const HomeStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
 
 const Tab = createMaterialBottomTabNavigator();
 
-const MainTabScreen = () => (
+const MainTabScreen = (props) => {
+  console.log(props.route.params.role)
+  return(
     <Tab.Navigator
       initialRouteName="Home"
       activeColor="#fff"
     >
+      {props.route.params.role==2?(
       <Tab.Screen
         name="Home"
-        component={HomeStackScreen}
+        component={HomeScreen}
         options={{
           tabBarLabel: 'Главная',
           tabBarColor: '#009387',
@@ -30,10 +34,20 @@ const MainTabScreen = () => (
             <Icon name="ios-home" color={color} size={26} />
           ),
         }}
-      />
+      />):(<Tab.Screen
+        name="Home"
+        component={CourseScreenMine}
+        options={{
+          tabBarLabel: 'Главная',
+          tabBarColor: '#009387',
+          tabBarIcon: ({ color }) => (
+            <Icon name="ios-home" color={color} size={26} />
+          ),
+        }}
+      />)}
       <Tab.Screen
         name="Details"
-        component={DetailsStackScreen}
+        component={DetailsScreen}
         options={{
           tabBarLabel: 'Обновления',
           tabBarColor: '#1f65ff',
@@ -64,45 +78,45 @@ const MainTabScreen = () => (
           ),
         }}
       />
-    </Tab.Navigator>
-);
+    </Tab.Navigator>)
+};
 
 export default MainTabScreen;
 
-const HomeStackScreen = ({navigation}) => (
-<HomeStack.Navigator screenOptions={{
-        headerStyle: {
-        backgroundColor: '#009387',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-        fontWeight: 'bold'
-        }
-    }}>
-        <HomeStack.Screen name="Home" component={HomeScreen} options={{
-        title:'Overview',
-        headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
-        }} />
-</HomeStack.Navigator>
-);
+// const HomeStackScreen = ({navigation}) => (
+// <HomeStack.Navigator screenOptions={{
+//         headerStyle: {
+//         backgroundColor: '#009387',
+//         },
+//         headerTintColor: '#fff',
+//         headerTitleStyle: {
+//         fontWeight: 'bold'
+//         }
+//     }}>
+//         <HomeStack.Screen name="Home" component={HomeScreen} options={{
+//         title:'Overview',
+//         headerLeft: () => (
+//             <Icon.Button name="ios-menu" size={25} backgroundColor="#009387" onPress={() => navigation.openDrawer()}></Icon.Button>
+//         )
+//         }} />
+// </HomeStack.Navigator>
+// );
 
-const DetailsStackScreen = ({navigation}) => (
-<DetailsStack.Navigator screenOptions={{
-        headerStyle: {
-        backgroundColor: '#1f65ff',
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-        fontWeight: 'bold'
-        }
-    }}>
-        <DetailsStack.Screen name="Details" component={DetailsScreen} options={{
-        headerLeft: () => (
-            <Icon.Button name="ios-menu" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
-        )
-        }} />
-</DetailsStack.Navigator>
-);
+// const DetailsStackScreen = ({navigation}) => (
+// <DetailsStack.Navigator screenOptions={{
+//         headerStyle: {
+//         backgroundColor: '#1f65ff',
+//         },
+//         headerTintColor: '#fff',
+//         headerTitleStyle: {
+//         fontWeight: 'bold'
+//         }
+//     }}>
+//         <DetailsStack.Screen name="Details" component={DetailsScreen} options={{
+//         headerLeft: () => (
+//             <Icon.Button name="ios-menu" size={25} backgroundColor="#1f65ff" onPress={() => navigation.openDrawer()}></Icon.Button>
+//         )
+//         }} />
+// </DetailsStack.Navigator>
+// );
   

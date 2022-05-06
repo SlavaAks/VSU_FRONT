@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList} from 'react-native';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import Mybutton from '../components/Mybutton';
@@ -7,19 +7,28 @@ import Mytextinput from '../components/Mytextinput';
 
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { IconButton, Colors } from 'react-native-paper';
-import CourseButton from '../components/CourseButton';
+import CourseButtonEdite from '../components/CourseButtonEdite';
+import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
+import ModuleListItem from '../components/ModuleListItem';
 
-
-const HomeScreen = (props) => {
+const ModuleScreen= (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
-
+    const [subject,setSubject]=useState()
+    const [title,setTitle]=useState()
+    const [slug,setSlug]=useState()
+    const [owerw,setOwerw]=useState()
+    const [isvisible,setIsvisibnle]=useState(false)
 
 
     useEffect(()=>{
-    const resp=$api.get(`api/student/course/`)
+    console.log(1111)
+    console.log(props.route.params.course)
+    const resp=$api.get(`api/course/${props.route.params.course}/module`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
-    },[rerender])
+
+    },[rerender,props])
+
 
 
 
@@ -37,15 +46,14 @@ const HomeScreen = (props) => {
       );
     };
   
-    let listItemView = ({ item }) => {
-      // console.log(item.item.item)
-
+    let listItemView = ({ item, drag, isActive }) => {
       return (
-        <CourseButton Click={()=>props.navigation.navigate("ModuleScreen",{"course":item.id})}
-        title={item.title} overview={item.overview}/>
+         
+         <ModuleListItem
+         Click={()=>props.navigation.navigate("ContentScreen",{"module":item.id})}
+        title={item.title} order={item.order}/>
       );
     };
-
 
 
 
@@ -53,9 +61,18 @@ const HomeScreen = (props) => {
       return (
 
         <>
-            
+         
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
-        <SafeAreaView>
+       
+          <SafeAreaView>
+ 
+        <IconButton 
+    icon="plus"
+    color={Colors.red500}
+    style={{alignSelf: "center"}}
+    size={35}
+    onPress={() => setIsvisibnle(true)}
+          />
 
                 <FlatList
                   data={items}
@@ -63,17 +80,18 @@ const HomeScreen = (props) => {
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={ listItemView}
                   />
-        </SafeAreaView>
 
 
+          </SafeAreaView>   
           </ImageBackground>
+
           </>
         
       );
 
 };
 
-export default HomeScreen;
+export default ModuleScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -97,7 +97,7 @@ const SignInScreen = ({navigation}) => {
             ]);
             return;
         } else{
-            Alert.alert("Пользователь добавлен")
+            Alert.alert("Пользователь зарегестрирован, подтвердите вашу регистрацию на почте")
             navigation.goBack()
         }
 

@@ -6,7 +6,7 @@ export default class AuthService {
     static async login(data){
         try{
        
-        const JWT=await $api.post('login',data).catch(err=>console.log(err))
+        const JWT=await $api.post('login/',data).catch(err=>console.log(err))
         return JWT
         }
         catch(e){
@@ -21,9 +21,16 @@ export default class AuthService {
         withCredentials: true,
             baseURL: API_URL
             })
-        return await $api.post('registration',data).catch(err=>console.log(err))
+        return await $api.post('registration/',data).catch(err=>console.log(err))
     }
 
+    static async refresh(data){
+        // console.log(data)
+        data={token:data}
+        let JWT=null;
+        await $api.post('refresh/',data).then(resp=>{JWT=resp}).catch(err=>console.log(err))
+        return JWT
+    }
     // static async logout(): Promise<void> {
     //     return $api.post('/logout/')
     // }

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function ModuleListItem(props) {
   return (
@@ -21,6 +21,12 @@ function ModuleListItem(props) {
                   <View style={styles.group2}>
                     <Text style={styles.loremIpsum3}>{props.title}</Text>
                   </View>
+                  <TouchableOpacity
+              onPress={props.DelClik}
+              style={styles.button2}
+            >
+              <Icon name="delete-forever" style={styles.icon}></Icon>
+            </TouchableOpacity>
                 </View>
               </View>
             </TouchableOpacity>
@@ -96,7 +102,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flex: 1,
 
-      }
+      },
+      button2: {
+        top: 35,
+        left: 282,
+        width: 40,
+        height: 40,
+        position: "absolute",
+        backgroundColor: "rgba(255,255,255,1)"
+      },
+      icon: {
+        position: "absolute",
+        color: "rgba(128,128,128,1)",
+        fontSize: 40,
+      },
 });
 
 export default ModuleListItem;

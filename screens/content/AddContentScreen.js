@@ -63,7 +63,7 @@ const AddContenScreen = (props) => {
           />
           <Mybutton
             title="video"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"video"})}
+            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"video",module:props.route.params.module})}
           />
           <Mybutton
             title="image"

@@ -106,7 +106,7 @@ const SignInScreen = ({navigation}) => {
 
 
         if ( JWT == undefined ) {
-            Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+            Alert.alert('Invalid User!', 'Username or password is incorrect. Or user wasn\'t activate', [
                 {text: 'Okay'}
             ]);
             return;

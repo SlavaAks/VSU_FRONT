@@ -38,6 +38,7 @@
  import AddContenScreen from './screens/content/AddContentScreen';
 import CourseScreenMine from './screens/CourseScreenMine';
 import ModuleScreenTeacher from './screens/ModuleScreenTeacher';
+import AuthService from './services/AuthService';
  
  const Drawer = createDrawerNavigator();
  
@@ -155,13 +156,23 @@ import ModuleScreenTeacher from './screens/ModuleScreenTeacher';
        // setIsLoading(false);
        let userToken;
        let userData;
+       let JWT;
        userToken = null;
        userData=null;
-       
+
        try {
          userToken = await AsyncStorage.getItem('userToken');
-         userData= await AsyncStorage.getItem('userData');
-         console.log(userData)
+        //  console.log(userToken)
+        JWT=await AuthService.refresh(userToken)
+        console.log(JWT)
+        if (JWT==undefined){
+          userToken = null;
+          userData=null;   
+        }
+        else{
+          userToken = String(JWT.data.token);
+          userData=JSON.stringify(JWT.data.user);   
+        }
        } catch(e) {
          console.log(e);
        }
@@ -183,10 +194,9 @@ import ModuleScreenTeacher from './screens/ModuleScreenTeacher';
      <NavigationContainer theme={theme}>
        { loginState.userToken !== null ? (
          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} userdata={loginState.user}/>}>
-       { JSON.parse(loginState.user).groups[0] ==2 ?(
-           <Drawer.Screen name="HomeDrawer" component={MainTabScreen}/>):
-           <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />}
-           
+
+           <Drawer.Screen name="HomeDrawer"   component={MainTabScreen }   initialParams={{role: JSON.parse(loginState.user).groups[0]}} />
+           <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />
            <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher}/>
            <Drawer.Screen name="ContentScreenTeacher" component={AddContenScreen}/>
            <Drawer.Screen name="ContentCreateScreen" component={ContentCreateScreen}/>

@@ -31,18 +31,18 @@ const ModuleScreenTeacher = (props) => {
 
 
     function DelClik(pk){
-      const resp=$api.delete(`api/course/${pk}/`)
+      const resp=$api.delete(`api/course/module/${pk}/`)
       resp.then(async resp=>{ console.log(await resp.data);setRerender(!rerender);}).catch(err=>{console.log(err);Alert.alert("Ошибка сервера")})
 
     }
 
     function AddModule (){
 
-    //   const data={subject,title,slug,overview:owerw}
+       const data={subject,title,slug,overview:owerw}
 
-    //   const resp=$api.post(`api/course/mine/`,data)
-    // resp.then(async resp=>{ console.log(await resp.data);setIsvisibnle(false);setRerender(!rerender);})
-    // .catch(err=>{console.log(err);Alert.alert("Ошибка введенных данных")})
+      const resp=$api.post(`api/course/mine/`,data)
+    resp.then(async resp=>{ console.log(await resp.data);setIsvisibnle(false);setRerender(!rerender);})
+    .catch(err=>{console.log(err);Alert.alert("Ошибка введенных данных")})
 
     }
    
@@ -84,7 +84,7 @@ const ModuleScreenTeacher = (props) => {
          
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
        
-          <SafeAreaView>
+
           <Modal visible={isvisible}>
                   <IconButton
     icon="close"
@@ -132,7 +132,7 @@ const ModuleScreenTeacher = (props) => {
 
           <Mybutton title="save" customClick={AddModule} />
         </Modal>
-
+        <SafeAreaView>
         <IconButton 
     icon="plus"
     color={Colors.red500}
