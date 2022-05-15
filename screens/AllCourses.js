@@ -2,25 +2,21 @@ import React, { useEffect,useState } from 'react';
 import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
-import Mybutton from '../components/Mybutton';
-import Mytextinput from '../components/Mytextinput';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { IconButton, Colors } from 'react-native-paper';
 import CourseButton from '../components/CourseButton';
-import ModuleScreen from './ModuleScreen';
 
 
-const HomeScreen = (props) => {
+
+const AllCourses = (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
 
 
 
     useEffect(()=>{
-    const resp=$api.get(`api/student/course/`)
-    resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
-    },[rerender])
+    
+    const resp=$api.get(`api/student/subject/${props.route.params.subject}/course/`)
+    resp.then(resp=>{console.log(resp.data);setItems(resp.data)}).catch(err=>console.log(err))
+    },[rerender,props])
 
 
    
@@ -50,9 +46,9 @@ const HomeScreen = (props) => {
 
       return (
 
-        <>
-      <View style={styles.container}>
-        {/* <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}> */}
+    //     <>
+    //   <View style={styles.container}>
+ 
         <SafeAreaView>
 
                 <FlatList
@@ -62,26 +58,19 @@ const HomeScreen = (props) => {
                   renderItem={ listItemView}
                   />
         </SafeAreaView>
-        </View>
-
-          {/* </ImageBackground> */}
-          </>
+        // </View>
+        //   </>
         
       );
 
 };
 
-export default HomeScreen;
+export default AllCourses;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "rgba(254,254,247,1)",
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
   },
-  image: {
-    flex: 1,
-    justifyContent: "center"
-  },
+
 });

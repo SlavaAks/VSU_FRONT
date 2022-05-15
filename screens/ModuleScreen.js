@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground} from 'react-native';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import Mybutton from '../components/Mybutton';
@@ -9,22 +9,19 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
-import ModuleListItem from '../components/ModuleListItem';
+import ModuleListItemStudent from '../components/ModuleListItemStudent';
+import VideoPlayer from '../components/VideoPlayerCustom';
 
 const ModuleScreen= (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
-    const [subject,setSubject]=useState()
-    const [title,setTitle]=useState()
-    const [slug,setSlug]=useState()
-    const [owerw,setOwerw]=useState()
-    const [isvisible,setIsvisibnle]=useState(false)
+
 
 
     useEffect(()=>{
     console.log(1111)
     console.log(props.route.params.course)
-    const resp=$api.get(`api/course/${props.route.params.course}/module`)
+    const resp=$api.get(`api/student/course/${props.route.params.course}/module/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
 
     },[rerender,props])
@@ -49,7 +46,7 @@ const ModuleScreen= (props) => {
     let listItemView = ({ item, drag, isActive }) => {
       return (
          
-         <ModuleListItem
+         <ModuleListItemStudent
          Click={()=>props.navigation.navigate("ContentScreen",{"module":item.id})}
         title={item.title} order={item.order}/>
       );
@@ -66,13 +63,6 @@ const ModuleScreen= (props) => {
        
           <SafeAreaView>
  
-        <IconButton 
-    icon="plus"
-    color={Colors.red500}
-    style={{alignSelf: "center"}}
-    size={35}
-    onPress={() => setIsvisibnle(true)}
-          />
 
                 <FlatList
                   data={items}
@@ -83,6 +73,7 @@ const ModuleScreen= (props) => {
 
 
           </SafeAreaView>   
+          {/* <VideoPlayer/> */}
           </ImageBackground>
 
           </>

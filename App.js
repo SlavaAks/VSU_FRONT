@@ -29,6 +29,8 @@
  import SettingsScreen from './screens/SettingsScreen';
  import BookmarkScreen from './screens/BookmarkScreen';
  import ContentCreateScreen from './screens/content/ContentCreateScreen';
+ import ContentScreen from './screens/ContentScreen';
+ import AllCoursesScreen from './screens/AllCourses';
  
  import { AuthContext } from './components/context';
  
@@ -38,7 +40,9 @@
  import AddContenScreen from './screens/content/AddContentScreen';
 import CourseScreenMine from './screens/CourseScreenMine';
 import ModuleScreenTeacher from './screens/ModuleScreenTeacher';
+import ModuleScreen from './screens/ModuleScreen';
 import AuthService from './services/AuthService';
+
  
  const Drawer = createDrawerNavigator();
  
@@ -120,7 +124,6 @@ import AuthService from './services/AuthService';
  
        const userToken = String(JWT.data.token);
        const userData=JSON.stringify(JWT.data.user)
- 
        
        try {
          await AsyncStorage.setItem('userToken', userToken);
@@ -195,11 +198,15 @@ import AuthService from './services/AuthService';
        { loginState.userToken !== null ? (
          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} userdata={loginState.user}/>}>
 
+
            <Drawer.Screen name="HomeDrawer"   component={MainTabScreen }   initialParams={{role: JSON.parse(loginState.user).groups[0]}} />
            <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />
            <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher}/>
+           <Drawer.Screen name="ModuleScreen" component={ModuleScreen}/>
+           <Drawer.Screen name="AllCoursesScreen" component={AllCoursesScreen}/>
            <Drawer.Screen name="ContentScreenTeacher" component={AddContenScreen}/>
            <Drawer.Screen name="ContentCreateScreen" component={ContentCreateScreen}/>
+           <Drawer.Screen name="ContentScreen" component={ContentScreen}/>
            <Drawer.Screen name="SupportScreen" component={SupportScreen} />
            <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
            <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />

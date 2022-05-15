@@ -9,6 +9,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
+import Dropdown from '../components/Dropdown';
 
 const CourseScreenMine = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -18,12 +19,13 @@ const CourseScreenMine = (props) => {
     const [slug,setSlug]=useState()
     const [owerw,setOwerw]=useState()
     const [isvisible,setIsvisibnle]=useState(false)
+    const [data,setData]=useState()
 
 
     useEffect(()=>{
-    console.log(1111)
     const resp=$api.get(`api/course/mine/`)
-    resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
+    resp.then(resp=>setItems(resp.data)).catch(err=>console.log(err))
+    $api.get(`api/subject/`).then(data=>setData(data.data)).catch(err=>console.log(err))
 
     },[rerender])
 
@@ -57,9 +59,7 @@ const CourseScreenMine = (props) => {
   
     let listItemView = ({ item, drag, isActive }) => {
       // console.log(item.item.item)
-      console.log(item)
-      console.log(drag)
-      console.log(isActive)
+
       return (
         <CourseButtonEdite Click={()=>props.navigation.navigate("ModuleScreenTeacher",{"course":item.id})}
         DelClik={()=>{DelClik(item.id)}} 
@@ -69,7 +69,7 @@ const CourseScreenMine = (props) => {
     };
 
 
-    onMoveEnd = ({ data }) => {
+  let  onMoveEnd = ({ data }) => {
       setItems(data)
     }
 
@@ -88,14 +88,8 @@ const CourseScreenMine = (props) => {
     size={35}
     onPress={() => setIsvisibnle(false)}
           />
-          <Mytextinput
-            placeholder="Предмет"
-            onChangeText={(Texts) => setSubject(Texts)}
-            value={subject}
-            maxLength={225}
-            numberOfLines={5}
-            multiline={true}
-            style={{ textAlignVertical: 'top', padding: 10 }} />
+
+          <Dropdown label="Select Item" data={data} onSelect={setSubject} />
 
           <Mytextinput
             placeholder="Тема"
@@ -126,7 +120,7 @@ const CourseScreenMine = (props) => {
 
           <Mybutton title="save" customClick={AddCourse} />
         </Modal>
-
+    <SafeAreaView>
         <IconButton 
     icon="plus"
     color={Colors.red500}
@@ -143,7 +137,7 @@ const CourseScreenMine = (props) => {
                   onDragEnd={onMoveEnd}
                   // onMoveEnd={onMoveEnd}
                   />
-
+  </SafeAreaView>
 
 
           </ImageBackground>

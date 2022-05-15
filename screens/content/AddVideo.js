@@ -21,11 +21,10 @@ const AddVideo = (props) => {
           }
         }
 
-        console.log(props)
         let res = $api.post(`api/course/module/${props.module}/content/`,data,config).then(
           res=>{ 
             Alert.alert('Upload Successful');
-           console.log(props)
+           props.navigation.navigate("ContentScreenTeacher",{"module":props.module})
             }
           
         ).catch(err=>console.log(err))

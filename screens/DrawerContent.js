@@ -17,6 +17,7 @@ import {
 } from '@react-navigation/drawer';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import IconSetting from 'react-native-vector-icons/AntDesign';
 
 import{ AuthContext } from '../components/context';
 import AsyncStorage from '@react-native-community/async-storage';
@@ -103,8 +104,8 @@ export function  DrawerContent(props) {
                         />
                         <DrawerItem 
                             icon={({color, size}) => (
-                                <Icon 
-                                name="settings-helper" 
+                                <IconSetting
+                                name="setting" 
                                 color={color}
                                 size={size}
                                 />

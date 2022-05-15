@@ -14,17 +14,16 @@ import ModuleListItem from '../components/ModuleListItem';
 const ModuleScreenTeacher = (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
-    const [subject,setSubject]=useState()
+
     const [title,setTitle]=useState()
-    const [slug,setSlug]=useState()
-    const [owerw,setOwerw]=useState()
+    const [descr,setDescr]=useState()
     const [isvisible,setIsvisibnle]=useState(false)
 
 
     useEffect(()=>{
     console.log(1111)
     console.log(props.route.params.course)
-    const resp=$api.get(`api/course/${props.route.params.course}/module`)
+    const resp=$api.get(`api/course/${props.route.params.course}/module/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
 
     },[rerender,props])
@@ -38,9 +37,9 @@ const ModuleScreenTeacher = (props) => {
 
     function AddModule (){
 
-       const data={subject,title,slug,overview:owerw}
+       const data={title,description:descr}
 
-      const resp=$api.post(`api/course/mine/`,data)
+      const resp=$api.post(`api/course/${props.route.params.course}/module/`,data)
     resp.then(async resp=>{ console.log(await resp.data);setIsvisibnle(false);setRerender(!rerender);})
     .catch(err=>{console.log(err);Alert.alert("Ошибка введенных данных")})
 
@@ -94,14 +93,7 @@ const ModuleScreenTeacher = (props) => {
     size={35}
     onPress={() => setIsvisibnle(false)}
           />
-          <Mytextinput
-            placeholder="Предмет"
-            onChangeText={(Texts) => setSubject(Texts)}
-            value={subject}
-            maxLength={225}
-            numberOfLines={5}
-            multiline={true}
-            style={{ textAlignVertical: 'top', padding: 10 }} />
+
 
           <Mytextinput
             placeholder="Тема"
@@ -112,19 +104,12 @@ const ModuleScreenTeacher = (props) => {
             multiline={true}
             style={{ textAlignVertical: 'top', padding: 10 }} />
 
-          <Mytextinput
-            placeholder="Короткое уникальное название(латиница)"
-            onChangeText={(Texts) => setSlug(Texts)}
-            value={slug}
-            maxLength={225}
-            numberOfLines={5}
-            multiline={true}
-            style={{ textAlignVertical: 'top', padding: 10 }} />
+
 
           <Mytextinput
             placeholder="Описание"
-            onChangeText={(Texts) => setOwerw(Texts)}
-            value={owerw}
+            onChangeText={(Texts) => setDescr(Texts)}
+            value={descr}
             maxLength={225}
             numberOfLines={5}
             multiline={true}

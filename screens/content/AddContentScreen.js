@@ -6,7 +6,7 @@ import Mybutton from '../../components/Mybutton';
 
 const AddContenScreen = (props) => {
     [module,setModule]=useState(props.route.params.module)
-
+    const [rerender, setRerender] = useState(false);
 
     const [items,setItems]=useState([])
     useEffect(()=>{
@@ -16,9 +16,13 @@ const AddContenScreen = (props) => {
     console.log(items)
 
 
-    },[props])
+    },[props,rerender])
 
-   
+    
+    let DelClick=(id)=>{$api.delete(`api/course/module/content/${id}/`).then(resp=>{console.log(resp);setRerender(!rerender)}).catch(err=>console.log(err))
+    console.log(items)
+    }
+
     let listViewItemSeparator = () => {
       return (
         <View
@@ -43,7 +47,7 @@ const AddContenScreen = (props) => {
           />
             <Mybutton
             title="delete"
-            customClick={() => props.navigation.navigate('Lesson', {sub, type})}
+            customClick={() => DelClick(item.id)}
           />
         </View>
       );
