@@ -45,6 +45,9 @@ import AuthService from './services/AuthService';
 
  
  const Drawer = createDrawerNavigator();
+Drawer.navigationOptions = {
+  header: null
+}
  
  const App = () => {
    // const [isLoading, setIsLoading] = React.useState(true);
@@ -117,6 +120,10 @@ import AuthService from './services/AuthService';
  
    const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
  
+
+
+
+   
    const authContext = React.useMemo(() => ({
      signIn: async(JWT) => {
        // setUserToken('fgkj');
@@ -199,8 +206,8 @@ import AuthService from './services/AuthService';
          <Drawer.Navigator drawerContent={props => <DrawerContent {...props} userdata={loginState.user}/>}>
 
 
-           <Drawer.Screen name="HomeDrawer"   component={MainTabScreen }   initialParams={{role: JSON.parse(loginState.user).groups[0]}} />
-           <Drawer.Screen name="CourseScreen" component={CourseScreenMine} />
+           <Drawer.Screen name="HomeDrawer"   component={MainTabScreen }   options={{headerShown: false}} initialParams={{role: JSON.parse(loginState.user).groups[0]}} />
+           <Drawer.Screen name="CourseScreen" component={CourseScreenMine} options={{headerShown: false}} />
            <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher}/>
            <Drawer.Screen name="ModuleScreen" component={ModuleScreen}/>
            <Drawer.Screen name="AllCoursesScreen" component={AllCoursesScreen}/>

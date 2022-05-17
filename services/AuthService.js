@@ -21,7 +21,7 @@ export default class AuthService {
         withCredentials: true,
             baseURL: API_URL
             })
-        return await $api.post('registration/',data).catch(err=>console.log(err))
+        return await $api.post('user/',data).catch(err=>console.log(err))
     }
 
     static async refresh(data){
@@ -31,6 +31,8 @@ export default class AuthService {
         await $api.post('refresh/',data).then(resp=>{JWT=resp}).catch(err=>console.log(err))
         return JWT
     }
+
+
     // static async logout(): Promise<void> {
     //     return $api.post('/logout/')
     // }

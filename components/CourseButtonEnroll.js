@@ -1,112 +1,96 @@
 import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Image, Text } from "react-native";
-import Icon from "react-native-vector-icons/Entypo";
+import Icon from "react-native-vector-icons/MaterialIcons";
 
 function CourseButtonEnroll(props) {
-    return(
-    <View style={styles.container}>
-    <View style={styles.buttonStack}>
-      <TouchableOpacity style={styles.button}>
-        <View style={styles.imageRow}>
-          <Image
-            source={require("../assets/Table.png")}
-            resizeMode="contain"
-            style={styles.image}
-          ></Image>
-          <Text style={styles.loremIpsum}>Lorem Ipsum</Text>
-        </View>
-      </TouchableOpacity>
-      <View style={styles.group}>
-        <View style={styles.iconRow}>
-          <TouchableOpacity style={styles.button2}> <Icon name="add-to-list" style={styles.icon}></Icon></TouchableOpacity>
+    return (
+      <View style={styles.container}>
+        <View style={styles.buttonStack}>
+          <TouchableOpacity style={styles.button}>
+            <View style={styles.imageRow}>
+              <Image
+                source={require("../assets/Table.png")}
+                resizeMode="contain"
+                style={styles.image}
+              ></Image>
+              <Text style={styles.loremIpsum}>{props.title}</Text>
+            </View>
+            <Text style={styles.loremIpsum3}>{props.overview}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button2} onPress={props.EnrollCours}>
+            <Icon name="add" style={styles.icon}></Icon>
+          </TouchableOpacity>
         </View>
       </View>
-      <Text style={styles.loremIpsum2}>
-        sadasdasdasdasdsadsadasdasdasdsadasdsadsadasdsadsad
-      </Text>
-    </View>
-  </View>
-);
-}
-
-const styles = StyleSheet.create({
-container: {
-  overflow: "scroll",
-  width: 351,
-  height: 161,
-  alignSelf: "center"
-},
-button: {
-  top: 22,
-  width: 342,
-  height: 140,
-  position: "absolute",
-  backgroundColor: "rgba(255,255,255,1)",
-  borderWidth: 1,
-  borderColor: "#000000",
-  borderRadius: 9,
-  left: 0,
-  flexDirection: "row"
-},
-image: {
-  width: 56,
-  height: 62
-},
-loremIpsum: {
-  fontFamily: "roboto-500",
-  color: "#121212",
-  fontSize: 20,
-  width: 118,
-  height: 24,
-  marginLeft: 20,
-  marginTop: 5
-},
-imageRow: {
-  height: 62,
-  flexDirection: "row",
-  flex: 1,
-  marginRight: 135,
-  marginLeft: 13,
-  marginTop: 7
-},
-group: {
-  top: 0,
-  left: 311,
-  width: 40,
-  height: 43,
-  position: "absolute",
-  flexDirection: "row"
-},
-icon: {
-  color: "rgba(128,128,128,1)",
-  fontSize: 40
-},
-button2: {
-  width: 38,
-  height: 43,
-  marginLeft: 2
-},
-iconRow: {
-  height: 43,
-  flexDirection: "row",
-  flex: 1
-},
-loremIpsum2: {
-  top: 98,
-  left: 13,
-  position: "absolute",
-  fontFamily: "roboto-regular",
-  color: "#121212",
-  height: 39,
-  width: 331,
-  fontSize: 16
-},
-buttonStack: {
-  width: 351,
-  height: 162
-}
-});
-
+    );
+  }
+  
+  const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      backgroundColor: "rgba(209, 209, 209, 1)"
+    },
+    button: {
+ 
+      width: "100%",
+      height: "100%",
+      marginTop: "5%",
+      position: "absolute",
+      backgroundColor: "rgba(255,255,255,1)",
+      borderRadius: 9
+    },
+    image: {
+      width: 79,
+      height: 51
+    },
+    loremIpsum: {
+      fontFamily: "roboto-500",
+      color: "#121212",
+      height: 60,
+      width: 224,
+      fontSize: 16,
+      marginLeft: 28,
+      marginTop: 7
+    },
+    imageRow: {
+      height: 67,
+      flexDirection: "row",
+      marginTop: 6,
+      marginRight: 14
+    },
+    loremIpsum3: {
+      fontFamily: "roboto-regular",
+      color: "#121212",
+      height: 59,
+      width: 330,
+      marginLeft: 9
+    },
+    button2: {
+      marginTop: "2%",
+      left: "91%",
+      width: 45,
+      height: 44,
+      // position: "absolute",
+      backgroundColor: "rgba(202,244,158,1)",
+      borderRadius: 41
+    },
+    icon: {
+      color: "rgba(128,128,128,1)",
+      fontSize: 40,
+      height: 40,
+      width: 40,
+      marginTop: 2,
+      marginLeft: 2
+    },
+    buttonStack: {
+      width: "82%",
+      height: 134,
+      marginBottom: "5%",
+      marginLeft: "9%"
+    }
+  });
+  
+  
 
 
 export default CourseButtonEnroll;

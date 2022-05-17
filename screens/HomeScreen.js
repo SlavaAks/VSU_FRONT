@@ -19,7 +19,7 @@ const HomeScreen = (props) => {
 
     useEffect(()=>{
     const resp=$api.get(`api/student/course/`)
-    resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
+    resp.then(resp=>setItems(resp.data)).catch(err=>console.log(err))
     },[rerender])
 
 

@@ -3,6 +3,7 @@ import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackgrou
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import CourseButton from '../components/CourseButton';
+import CourseButtonEnroll from '../components/CourseButtonEnroll';
 
 
 
@@ -18,7 +19,12 @@ const AllCourses = (props) => {
     resp.then(resp=>{console.log(resp.data);setItems(resp.data)}).catch(err=>console.log(err))
     },[rerender,props])
 
-
+    const EnrollCours=(item)=>{
+      $api.post(`api/student/course/${item.id}/`).
+      then(resp=>{console.log(resp.data);}).
+      catch(err=>console.log(err))
+    setRerender(!rerender)
+    }
    
     let listViewItemSeparator = () => {
       return (
@@ -35,7 +41,7 @@ const AllCourses = (props) => {
     let listItemView = ({ item }) => {
 
       return (
-        <CourseButton Click={()=>props.navigation.navigate("ModuleScreen",{"course":item.id})}
+        <CourseButtonEnroll EnrollCours={()=>EnrollCours(item)} Click={()=>props.navigation.navigate("ModuleScreen",{"course":item.id})}
         title={item.title} overview={item.overview}/>
       );
     };
@@ -46,20 +52,20 @@ const AllCourses = (props) => {
 
       return (
 
-    //     <>
-    //   <View style={styles.container}>
- 
-        <SafeAreaView>
 
+    <View style={styles.container}> 
+        <SafeAreaView >
+      
                 <FlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={ listItemView}
                   />
+    
         </SafeAreaView>
-        // </View>
-        //   </>
+            </View> 
+
         
       );
 
@@ -69,7 +75,7 @@ export default AllCourses;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "rgba(254,254,247,1)",
+    backgroundColor: "rgba(209, 209, 209, 1)",
     flex: 1, 
   },
 

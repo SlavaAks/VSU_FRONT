@@ -11,23 +11,38 @@ const ExploreScreen = (props) => {
     const [query,setQuery]=useState('')
     const [subjects,setSubject]=useState()
     const [courses,setCourses]=useState()
+    const [courses_mine,setCourses_mine]=useState()
     const [courses_all,setCourses_all]=useState()
     const [switcher,setSwitcher]=useState(true)
 
     useEffect(()=>{
+      console.log("sss")
       const resp=$api.get(`api/subject/`)
       resp.then(resp=>setSubject(resp.data)).catch(err=>console.log(err))
       $api.get("api/course/")
       .then(resp => {setCourses_all(resp.data)})
       .catch(err => console.warn(err));
+      $api.get(`api/student/course/`)
+      .then(resp=>setCourses_mine(resp.data)).catch(err=>console.log(err))
       },[rerender]) 
 
 
     let SearchCourse=async ()=>{
-    setCourses(courses_all.filter(({ title }) =>title.includes(query)))
+    let course_set=courses_all.filter(({ title }) =>title.includes(query))
+    let course_mine_set=courses_mine.map(x=>x.id)
+    course_set=course_set.filter(x =>{!console.log(course_mine_set) ;return !course_mine_set.includes(x.id)})
+    setCourses(course_set)
     setSwitcher(false)
     }
 
+
+    const EnrollCours=(item)=>{
+      $api.post(`api/student/course/${item.id}/`).
+      then(resp=>{console.log(resp.data);}).
+      catch(err=>console.log(err))
+      SearchCourse()
+      setRerender(!rerender)
+    }
       
     let listViewItemSeparator = () => {
       return (
@@ -50,7 +65,7 @@ const ExploreScreen = (props) => {
 
     let listItemViewCourses = ({ item }) => {
       return (
-        <CourseButton Click={()=>{props.navigation.navigate("ModuleScreen",{"module":item.id})}}
+        <CourseButtonEnroll EnrollCours={()=>{EnrollCours(item)}} Click={()=>{props.navigation.navigate("ModuleScreen",{"module":item.id})}}
         title={item.title}/>
       );
     };

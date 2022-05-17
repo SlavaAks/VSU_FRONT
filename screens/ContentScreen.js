@@ -5,22 +5,21 @@ import $api, { API_URL } from '../api/client';
 import RNFetchBlob from 'rn-fetch-blob';
 import Icon from 'react-native-vector-icons/Feather';
 import VideoPlayer from '../components/VideoPlayerCustom';
+import { Modal } from 'react-native-paper';
 // import VideoPlayer from 'react-native-video-player';
 
 
 
 const ContentScreen = (props) => {
     const [rerender, setRerender] = useState(false);
-
+    const [isvisible,setIsvisible]=useState(false);
     const [items,setItems]=useState([])
     useEffect(()=>{
     console.log(props.route.params.module)
     const resp=$api.get(`api/student/course/module/${props.route.params.module}/content/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
     console.log(items)
-
-
-    },[props,rerender])
+    },[rerender,props])
 
 
     const checkPermission = async () => {
@@ -125,7 +124,7 @@ const ContentScreen = (props) => {
   
     let listItemView = (item) => {
       console.log(item)
-      return (<View>
+      return (<>
         {  item.content_type=="text" && 
              <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
              <Text>{item.item.title}</Text>
@@ -143,16 +142,13 @@ const ContentScreen = (props) => {
         }
 
         {  item.content_type=="video" && 
-              <View key={item.id} style={{backgroundColor: 'white', padding: 20,height:100} } >
-            {/* // <VideoPlayer url={`http://10.0.2.2:8000${item.item.item}`}/>  */}
+
+
+              <View key={item.id} style={{backgroundColor: 'white',marginTop:5,height:200,width:"100%"} } >
             <VideoPlayer url={`${item.item.item}`}/> 
-{/* //             <VideoPlayer */}
-{/* //     video={require("../assets/sample5s.mp4")}
-//     videoWidth={1600}
-//     videoHeight={900}
-//     thumbnail={{ uri: 'https://w-dog.ru/wallpapers/10/18/464728990985141/priroda-gory-kamni-les.jpg' }}
-// /> */}
               </View>
+
+
           //   <TouchableHighlight
           //   underlayColor="rgba(200,200,200,0.6)"
           //   onPress={()=>openVideo(item.item.item)}
@@ -160,8 +156,7 @@ const ContentScreen = (props) => {
           //   <Text style={styles.videoTile}>Watch</Text>
           // </TouchableHighlight>
         }
-
-        </View>
+        </>
       );
     };
 
@@ -169,28 +164,28 @@ const ContentScreen = (props) => {
 
       return (
         <SafeAreaView style={{flex: 1}}>
-          <View style={{flex: 1, backgroundColor: 'white'}}>
-            <View style={{flex: 1}}>
+          {/* // <View style={{flex: 1, backgroundColor: 'white'}}> */}
+            
               <FlatList
                 data={items}
                 ItemSeparatorComponent={listViewItemSeparator}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => listItemView(item)}
               />
-            </View>
-            <Text
-              style={{
-                fontSize: 18,
-                textAlign: 'center',
-                color: 'grey',
-              }}></Text>
-            <Text
-              style={{
-                fontSize: 16,
-                textAlign: 'center',
-                color: 'grey',
-              }}></Text>
-          </View>
+            
+        {/* //     <Text
+        //       style={{
+        //         fontSize: 18,
+        //         textAlign: 'center',
+        //         color: 'grey',
+        //       }}></Text>
+        //     <Text
+        //       style={{
+        //         fontSize: 16,
+        //         textAlign: 'center',
+        //         color: 'grey',
+        //       }}></Text>
+        //   </View> */}
         </SafeAreaView>
       );
 
@@ -200,7 +195,7 @@ export default ContentScreen;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1, 
+    flex:1, 
     alignItems: 'center', 
     justifyContent: 'center'},
     videoTile: {
