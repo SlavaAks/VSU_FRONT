@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
   },
   button: {
     color: "#fff",
-    fontSize: 17
+    fontSize: 14
   }
 });
 

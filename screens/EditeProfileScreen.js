@@ -9,6 +9,9 @@ import {
 
 } from 'react-native';
 
+
+
+
 import {useTheme} from 'react-native-paper';
 
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -25,9 +28,9 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 
-const EditProfileScreen = () => {
-
-  const [image, setImage] = useState('https://api.adorable.io/avatars/80/abott@adorable.png');
+const EditProfileScreen = (props) => {
+  const [rerender,setRerender]=useState(false)
+  const [image, setImage] = useState();
   const {colors} = useTheme();
   const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" "})
 
@@ -38,6 +41,7 @@ const EditProfileScreen = () => {
   const [city,setCity]=useState(userdata.city)
   const [country,setCountry]=useState(userdata.country)
 
+
   // JSON.parse(props.userdata)
   useEffect(()=>{AsyncStorage.getItem('userData').then((userData) => {
      
@@ -46,21 +50,24 @@ const EditProfileScreen = () => {
           setUserdata(JSON.parse(userData));
 
       }
-  })},[]);
+  });},[rerender,AsyncStorage,props]);
  
 
 
   const UpdateUser=()=>{
     const data = new FormData();
     data.append('last_name', last_name);
+    // console.log(image)
     // data.append('avatar', image);
     data.append('first_name',first_name);
-    data.append('phone', phone);
+    data.append('phone',Number(phone));
     data.append('email',email);
     data.append('country',country);
     data.append('city',city);
 
-    $api.patch('user/',data).then(resp=>console.log(resp).catch(err=>console.log(err)))
+    $api.patch('user/',data).then(resp=>{console.log(resp);
+      AsyncStorage.setItem("userData",JSON.stringify(resp.data));
+      setRerender(!rerender)}).catch(err=>console.log(err))
   }
 
   const takePhotoFromCamera = () => {
@@ -137,8 +144,8 @@ const EditProfileScreen = () => {
           <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
             <View
               style={{
-                height: 100,
-                width: 100,
+                height: 50,
+                width: 50,
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -147,7 +154,7 @@ const EditProfileScreen = () => {
                 source={{
                   uri: image,
                 }}
-                style={{height: 100, width: 100}}
+                style={{height: 50, width: 50}}
                 imageStyle={{borderRadius: 15}}>
                 <View
                   style={{
@@ -289,7 +296,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#FF6347',
     alignItems: 'center',
-    marginTop: 10,
+    margin: 5,
   },
   panel: {
     padding: 20,

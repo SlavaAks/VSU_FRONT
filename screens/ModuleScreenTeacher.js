@@ -10,6 +10,7 @@ import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 import ModuleListItem from '../components/ModuleListItem';
+import CupertinoHeaderWithAddButton from '../components/HeaderAddButton';
 
 const ModuleScreenTeacher = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -82,7 +83,7 @@ const ModuleScreenTeacher = (props) => {
         <>
          
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
-       
+       <CupertinoHeaderWithAddButton title={"modules"} menu={()=>props.navigation.toggleDrawer()} onPress={() => setIsvisibnle(true)}/>
 
           <Modal visible={isvisible}>
                   <IconButton
@@ -149,11 +150,10 @@ export default ModuleScreenTeacher;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+
   },
   image: {
     flex: 1,
-    justifyContent: "center"
+
   },
 });

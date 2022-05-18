@@ -35,7 +35,7 @@ export function  DrawerContent(props) {
             setUserdata(JSON.parse(userData));
 
         }
-    })},[]
+    })},[AsyncStorage]
     );
 
     return(

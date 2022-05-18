@@ -1,8 +1,9 @@
 import React, { useEffect,useState } from 'react';
 import { View, Text, Button, StyleSheet ,SafeAreaView,FlatList} from 'react-native';
 import $api from '../../api/client';
-import Mybutton from '../../components/Mybutton';
+import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 import CupertinoButtonPurple from '../../components/CupertinoButtonPurple';
+import ContentEditButton from '../../components/ContentEditButton';
 
 
 const AddContenScreen = (props) => {
@@ -36,23 +37,18 @@ const AddContenScreen = (props) => {
       );
     };
   
-    let listItemView = (item) => {
-      console.log(item.item.item)
+    let listItemView = ({ item, drag, isActive }) => {
       return (
-        <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
-          <Text>{item.item.title}</Text>
-          <Text>{item.item.item}</Text>
-          <Mybutton
-            title="edit"
-            customClick={() => props.navigation.navigate('Lesson', {sub, type})}
-          />
-            <Mybutton
-            title="delete"
-            customClick={() => DelClick(item.id)}
-          />
-        </View>
+        <ContentEditButton DrugMove={drag} title={item.item.title} content_type={item.content_type} delete={() => DelClick(item.id)} edit={()=>{}}/>
       );
     };
+
+    onMoveEnd = ({ data }) => {
+      setItems(data)
+      $api.post(`api/course/module/${props.route.params.module}/order/`,data)
+        .then(resp=>{console.log(resp.status);setRerender(!rerender);}).catch(err=>{console.log(err);Alert.alert(err)})
+
+    }
 
 
 
@@ -63,39 +59,40 @@ const AddContenScreen = (props) => {
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="text"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"text",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"text",module:props.route.params.module})}
             />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="file"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"file",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"file",module:props.route.params.module})}
          />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="video"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"video",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"video",module:props.route.params.module})}
           />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="image"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"image"})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"image"})}
           ></CupertinoButtonPurple>
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="test"
-            customClick={() => props.navigation.navigate('ContentCreateScreen', {content_type:"test"})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"test"})}
           />
         </View>
       </View>
 
           <View style={{flex: 1, backgroundColor: 'white'}}>
             <View style={{flex: 1}}>
-              <FlatList
-                data={items}
-                ItemSeparatorComponent={listViewItemSeparator}
-                keyExtractor={(item, index) => index.toString()}
-                renderItem={({item}) => listItemView(item)}
-              />
+            <DraggableFlatList
+                  data={items}
+                  ItemSeparatorComponent={listViewItemSeparator}
+                  keyExtractor={(item, index) => index.toString()}
+                  renderItem={ listItemView}
+                  onDragEnd={onMoveEnd}
+                  />
             </View>
             <Text
               style={{
@@ -112,13 +109,6 @@ const AddContenScreen = (props) => {
           </View>
         </SafeAreaView>
       );
-      // <View style={styles.container}>
-      //   <Text>Settings Screen</Text>
-      //   <Button
-      //     title="Click Here"
-      //     onPress={() => alert('Button Clicked!')}
-      //   />
-      // </View>
 
 };
 
@@ -132,12 +122,14 @@ const styles = StyleSheet.create({
   },
   cupertinoButtonPurple6Row: {
     height: 38,
+    width:"100%",
     flexDirection: "row",
-    flex: 1
+    // flex: 1
   },
-  cupertinoButtonPurple6: {
+  cupertinoButtonPurple: {
     height: 38,
-    width: 58,
+    width:"17.5%",
+    marginLeft:"2%",
     borderRadius: 9
   }
 });

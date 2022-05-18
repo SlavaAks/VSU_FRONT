@@ -10,6 +10,7 @@ import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 import Dropdown from '../components/Dropdown';
+import CupertinoHeaderWithAddButton from '../components/HeaderAddButton';
 
 const CourseScreenMine = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -21,7 +22,7 @@ const CourseScreenMine = (props) => {
     const [isvisible,setIsvisibnle]=useState(false)
     const [data,setData]=useState()
 
-
+    
     useEffect(()=>{
     const resp=$api.get(`api/course/mine/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>console.log(err))
@@ -29,14 +30,13 @@ const CourseScreenMine = (props) => {
 
     },[rerender])
 
-
     function DelClik(pk){
       const resp=$api.delete(`api/course/${pk}/`)
       resp.then(async resp=>{ console.log(await resp.data);setRerender(!rerender);}).catch(err=>{console.log(err);Alert.alert("Ошибка сервера")})
 
     }
 
-    function AddCourse (){
+    function AddCourse (props){
 
       const data={subject,title,slug,overview:owerw}
 
@@ -69,7 +69,7 @@ const CourseScreenMine = (props) => {
     };
 
 
-  let  onMoveEnd = ({ data }) => {
+  let  onMoveEnd = ({ data }) => { 
       setItems(data)
     }
 
@@ -79,6 +79,7 @@ const CourseScreenMine = (props) => {
         <>
             
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
+        <CupertinoHeaderWithAddButton title={"courses"} menu={()=>props.navigation.toggleDrawer()} onPress={() => setIsvisibnle(true)}/>
         <Modal visible={isvisible}>
                   <IconButton
     icon="close"
@@ -121,14 +122,7 @@ const CourseScreenMine = (props) => {
           <Mybutton title="save" customClick={AddCourse} />
         </Modal>
     <SafeAreaView>
-        <IconButton 
-    icon="plus"
-    color={Colors.red500}
-    style={{alignSelf: "center"}}
-    size={35}
-    onPress={() => setIsvisibnle(true)}
-          />
-
+       
                 <DraggableFlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}
@@ -152,11 +146,8 @@ export default CourseScreenMine;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
   },
   image: {
     flex: 1,
-    justifyContent: "center"
   },
 });

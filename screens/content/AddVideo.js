@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import { View, Text, StyleSheet,Alert,TouchableOpacity,TextInput } from 'react-native';
-import Mytextinput from '../../components/Mytextinput';
 import $api from '../../api/client';
 import DocumentPicker from 'react-native-document-picker';
 import * as Animatable from 'react-native-animatable';
@@ -63,6 +62,7 @@ const AddVideo = (props) => {
 
     return ( 
     <View style={styles.container}>
+      <View style={{flex:1}}>
     <Text style={styles.videoTitle}>Video title:</Text>
     <TextInput
       placeholder=""
@@ -91,6 +91,7 @@ const AddVideo = (props) => {
     {singleFile != null ? <Text style={styles.fileName}>File Name: {singleFile[0].name}</Text>
     : null}
   </View>
+  </View>
     );
 };
 
@@ -99,7 +100,7 @@ export default AddVideo;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "rgba(196,196,196,1)"
+    backgroundColor: "rgba(196,196,196,1)",
   },
   videoTitle: {
     fontFamily: "roboto-regular",

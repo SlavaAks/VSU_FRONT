@@ -30,7 +30,7 @@ const ProfileScreen = () => {
           setUserdata(JSON.parse(userData));
 
       }
-  })},[]);
+  })},[AsyncStorage]);
  
   const myCustomShare = async() => {
     const shareOptions = {
