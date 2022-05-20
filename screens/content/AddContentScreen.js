@@ -74,12 +74,12 @@ const AddContenScreen = (props) => {
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="image"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"image"})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"image",module:props.route.params.module})}
           ></CupertinoButtonPurple>
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="test"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"test"})}
+            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"test",module:props.route.params.module})}
           />
         </View>
       </View>

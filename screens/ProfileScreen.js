@@ -18,7 +18,7 @@ import IconSetting from 'react-native-vector-icons/AntDesign';
 
 import AsyncStorage from '@react-native-community/async-storage';
 
-const ProfileScreen = () => {
+const ProfileScreen = (props) => {
 
 
   const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" "})
@@ -116,7 +116,7 @@ const ProfileScreen = () => {
             <Text style={styles.menuItemText}>Tell Your Friends</Text>
           </View>
         </TouchableRipple>
-        <TouchableRipple onPress={() => {}}>
+        <TouchableRipple onPress={() => {props.navigation.navigate("SupportScreen")}}>
           <View style={styles.menuItem}>
             <Icon name="account-check-outline" color="#FF6347" size={25}/>
             <Text style={styles.menuItemText}>Support</Text>

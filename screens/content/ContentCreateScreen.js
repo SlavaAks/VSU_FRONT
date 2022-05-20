@@ -3,6 +3,7 @@ import { NativeModules, TextInput } from 'react-native';
 import { View, Text, Button, StyleSheet,Alert,TouchableOpacity } from 'react-native';
 import DocumentPicker, { types } from 'react-native-document-picker';
 import AddFile from './AddFile';
+import AddTest from './AddTest';
 import AddText from './AddText';
 import AddVideo from './AddVideo';
 
@@ -14,6 +15,7 @@ const ContentCreateScreen = (props) => {
           {props.route.params.content_type=="text" && <AddText navigation={props.navigation} module={props.route.params.module}/>}
           {props.route.params.content_type=="file" && <AddFile navigation={props.navigation} module={props.route.params.module}/>}
           {props.route.params.content_type=="video" && <AddVideo navigation={props.navigation} module={props.route.params.module}/>}
+          {props.route.params.content_type=="test" && <AddTest navigation={props.navigation} module={props.route.params.module}/>}
         </View>
     );
 };
