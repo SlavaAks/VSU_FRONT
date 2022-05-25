@@ -119,13 +119,6 @@ const ModuleScreenTeacher = (props) => {
           <Mybutton title="save" customClick={AddModule} />
         </Modal>
         <SafeAreaView>
-        <IconButton 
-    icon="plus"
-    color={Colors.red500}
-    style={{alignSelf: "center"}}
-    size={35}
-    onPress={() => setIsvisibnle(true)}
-          />
 
                 <DraggableFlatList
                   data={items}

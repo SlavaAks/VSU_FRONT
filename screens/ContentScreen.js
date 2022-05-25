@@ -6,6 +6,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Icon from 'react-native-vector-icons/Feather';
 import VideoPlayer from '../components/VideoPlayerCustom';
 import { Modal } from 'react-native-paper';
+import MaterialCheckboxWithLabel1 from '../components/CheckBox';
+import TestChek from '../components/TestChek';
 // import VideoPlayer from 'react-native-video-player';
 
 
@@ -18,7 +20,7 @@ const ContentScreen = (props) => {
     console.log(props.route.params.module)
     const resp=$api.get(`api/student/course/module/${props.route.params.module}/content/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
-    console.log(items)
+    // console.log(items)
     },[rerender,props])
 
 
@@ -115,9 +117,10 @@ const ContentScreen = (props) => {
 
 
 
+
     function openVideo(url) {
     
-        Linking.openURL(`http://10.0.2.2:8000${url}`).catch(err =>
+        Linking.openURL(`${url}`).catch(err =>
           console.error("An error occurred opening the link", err)
         );
       }
@@ -125,37 +128,56 @@ const ContentScreen = (props) => {
     let listItemView = (item) => {
       console.log(item)
       return (<>
+        {item.content_type=="test" &&
+          <View>
+            <TestChek title={item.item.title} query={JSON.parse(item.item.item)}></TestChek>
+          </View>
+        }
         {  item.content_type=="text" && 
-             <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
-             <Text>{item.item.title}</Text>
-             <Text>{item.item.item}</Text>
+             <View key={item.id} style={styles.textContent}>
+             <Text style={styles.titleText}>{item.item.title}</Text>
+             <Text style={styles.lectureText}> {item.item.item}</Text>
              </View>
         }
 
         {  item.content_type=="file" && 
              <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
              <Text>{item.item.title}</Text>
-             <TouchableOpacity onPress={()=>downloadFile(item.item.item)}> 
-             <Icon name="file"  size={26}/>
+             <TouchableOpacity style={styles.buttonFile} onPress={()=>downloadFile(item.item.item) }> 
+             <Icon name="file"  size={30}/>
              </TouchableOpacity>
              </View>
         }
 
         {  item.content_type=="video" && 
-
-
-              <View key={item.id} style={{backgroundColor: 'white',marginTop:5,height:200,width:"100%"} } >
-            <VideoPlayer url={`${item.item.item}`}/> 
+              <View key={item.id} style={styles.videoPlayerContent} >
+                <VideoPlayer url={`${item.item.item}`}/> 
               </View>
-
-
-          //   <TouchableHighlight
-          //   underlayColor="rgba(200,200,200,0.6)"
-          //   onPress={()=>openVideo(item.item.item)}
-          // >
-          //   <Text style={styles.videoTile}>Watch</Text>
-          // </TouchableHighlight>
         }
+
+        {  item.content_type=="image" && 
+              <View key={item.id} style={styles. imageContent} >
+              
+                <Image  source={{
+                  uri: `${item.item.item}`,}}
+                  style={{height: "100%", width:  "100%"}}
+                  imageStyle={{borderRadius: 15}}
+                 /> 
+              </View>
+        }
+
+
+{  item.content_type=="videourl" && 
+
+
+
+  <TouchableHighlight
+  underlayColor="rgba(200,200,200,0.6)"
+  onPress={()=>openVideo(item.item.item)}
+>
+  <Text style={styles.videoTile}>Watch--- {item.item.title}</Text>
+</TouchableHighlight>
+}
         </>
       );
     };
@@ -163,29 +185,13 @@ const ContentScreen = (props) => {
 
 
       return (
-        <SafeAreaView style={{flex: 1}}>
-          {/* // <View style={{flex: 1, backgroundColor: 'white'}}> */}
-            
+        <SafeAreaView >
               <FlatList
                 data={items}
                 ItemSeparatorComponent={listViewItemSeparator}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({item}) => listItemView(item)}
               />
-            
-        {/* //     <Text
-        //       style={{
-        //         fontSize: 18,
-        //         textAlign: 'center',
-        //         color: 'grey',
-        //       }}></Text>
-        //     <Text
-        //       style={{
-        //         fontSize: 16,
-        //         textAlign: 'center',
-        //         color: 'grey',
-        //       }}></Text>
-        //   </View> */}
         </SafeAreaView>
       );
 
@@ -202,5 +208,42 @@ const styles = StyleSheet.create({
       alignSelf: "center",
       fontSize: 16,
       marginTop: 15
-    }
+    },
+    textContent:{
+      borderColor: '#007FFF',
+      borderWidth: 1,
+      padding: 20
+    },
+    titleText:{
+     fontSize: 20,
+     textAlign: 'center',
+     color: '#121212',
+     marginBottom:"5%",
+    },
+    lectureText:{
+      fontSize: 16,
+      color: '#121212',
+     },
+     videoPlayerContent:{
+      marginTop:15,
+      height:300,
+      width:"100%"
+     }, 
+     imageContent:{
+       backgroundColor:"#dbdbdb",
+      marginTop:15,
+      alignSelf:"center",
+      height:250,
+      width:"90%"
+     },
+    //  buttonFile:{
+    //   width:"8%",
+    //   // height: "14%",
+    //   backgroundColor: "rgba(209, 209, 209, 1)",
+    //   marginTop:"10%",
+    //   // borderWidth: 1,
+    //   // borderColor: "#000000",
+    //   borderRadius: 9,
+    //   marginLeft: 10
+    //  }
   });

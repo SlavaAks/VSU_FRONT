@@ -37,7 +37,7 @@ const AddContenScreen = (props) => {
       );
     };
   
-    let listItemView = ({ item, drag, isActive }) => {
+    let listItemView = ({ item, drag, isActive }) => {console.log(item.item.item)
       return (
         <ContentEditButton DrugMove={drag} title={item.item.title} content_type={item.content_type} delete={() => DelClick(item.id)} edit={()=>{}}/>
       );

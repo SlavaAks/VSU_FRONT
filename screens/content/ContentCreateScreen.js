@@ -6,7 +6,7 @@ import AddFile from './AddFile';
 import AddTest from './AddTest';
 import AddText from './AddText';
 import AddVideo from './AddVideo';
-
+import AddImage from './AddImage';
 const ContentCreateScreen = (props) => {
   // const [content_type,setContent_type]=useState(props.route.params)
   // console.log(content_type['content_type'])
@@ -16,6 +16,7 @@ const ContentCreateScreen = (props) => {
           {props.route.params.content_type=="file" && <AddFile navigation={props.navigation} module={props.route.params.module}/>}
           {props.route.params.content_type=="video" && <AddVideo navigation={props.navigation} module={props.route.params.module}/>}
           {props.route.params.content_type=="test" && <AddTest navigation={props.navigation} module={props.route.params.module}/>}
+          {props.route.params.content_type=="image" && <AddImage navigation={props.navigation} module={props.route.params.module}/>}
         </View>
     );
 };

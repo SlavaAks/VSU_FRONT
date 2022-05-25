@@ -29,6 +29,10 @@ import AsyncStorage from '@react-native-community/async-storage';
 
 
 const EditProfileScreen = (props) => {
+  const bs = React.createRef();
+  const fall = new Animated.Value(1);
+
+
   const [rerender,setRerender]=useState(false)
   const [image, setImage] = useState();
   const {colors} = useTheme();
@@ -57,8 +61,15 @@ const EditProfileScreen = (props) => {
   const UpdateUser=()=>{
     const data = new FormData();
     data.append('last_name', last_name);
-    // console.log(image)
-    // data.append('avatar', image);
+    console.log(Platform.OS === 'android' )
+    data.append('avatar',  {
+      name: "image",
+      type: "image/png",
+      uri:
+        Platform.OS === "android"
+          ? image
+          : image.replace("file://", "")
+    });
     data.append('first_name',first_name);
     data.append('phone',Number(phone));
     data.append('email',email);
@@ -77,7 +88,6 @@ const EditProfileScreen = (props) => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
       setImage(image.path);
       bs.current.snapTo(1);
     });
@@ -90,7 +100,7 @@ const EditProfileScreen = (props) => {
       cropping: true,
       compressImageQuality: 0.7
     }).then(image => {
-      console.log(image);
+      console.log(image.path);
       setImage(image.path);
       bs.current.snapTo(1);
     });
@@ -123,8 +133,7 @@ const EditProfileScreen = (props) => {
     </View>
   );
 
-  const bs = React.createRef();
-  const fall = new Animated.Value(1);
+
 
   return (
     <View style={styles.container}>
@@ -144,23 +153,25 @@ const EditProfileScreen = (props) => {
           <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
             <View
               style={{
-                height: 50,
-                width: 50,
+                height: 100,
+                width: 100,
                 borderRadius: 15,
                 justifyContent: 'center',
                 alignItems: 'center',
+                backgroundColor:"#666666"
               }}>
               <ImageBackground
                 source={{
                   uri: image,
                 }}
-                style={{height: 50, width: 50}}
+                style={{height: 100, width: 100}}
                 imageStyle={{borderRadius: 15}}>
                 <View
                   style={{
                     flex: 1,
                     justifyContent: 'center',
                     alignItems: 'center',
+              
                   }}>
                   <Icon
                     name="camera"
@@ -354,8 +365,8 @@ const styles = StyleSheet.create({
   },
   action: {
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
+    marginTop: 5,
+    marginBottom: 5,
     borderBottomWidth: 1,
     borderBottomColor: '#f2f2f2',
     paddingBottom: 5,

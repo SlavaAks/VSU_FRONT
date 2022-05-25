@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Text,
   SafeAreaView,
-  FlatList
+  FlatList,
+  ScrollView
 } from "react-native";
 import { renderNode } from "react-native-elements/dist/helpers";
 import $api from "../../api/client";
@@ -15,7 +16,7 @@ import CupertinoButtonDelete from "../../components/DeleteBasketButton";
 function AddTest(props) {
   const [items,setItems]=useState([])
   const [rerender,setRerender]=useState()
-  const [title,setTitle]=useState()
+  const [title,setTitle]=useState('')
 // useEffect(()=>{
 // setItems=[]
 // },[rerender,items]
@@ -28,7 +29,7 @@ function AddTest(props) {
     data.append('answer',JSON.stringify(items));
     data.append('content_type',"test")
     $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>console.log(resp)).then(err=>console.log(err))
-
+    props.navigation.navigate("ContentScreenTeacher",{"module":props.module})
   }
 
   const correctAnswer=()=>{
@@ -90,11 +91,10 @@ function AddTest(props) {
 
 
   return (
-    <View style={styles.container}>
-      <SafeAreaView>
+    <ScrollView style={styles.container}>
             <TextInput
             onChangeText={(text)=>setTitle(text)}
-        placeholder="Title"
+        placeholder="Вопрос"
         textBreakStrategy="simple"
         autoCorrect={false}
         style={styles.title}
@@ -116,8 +116,7 @@ function AddTest(props) {
           <Text style={styles.ложныйВариант}>ложный вариант</Text>
         </TouchableOpacity>
       </View>
-      </SafeAreaView>
-    </View>
+    </ScrollView>
     
   );
 }

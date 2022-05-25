@@ -19,8 +19,6 @@ const ModuleScreen= (props) => {
 
 
     useEffect(()=>{
-    console.log(1111)
-    console.log(props.route.params.course)
     const resp=$api.get(`api/student/course/${props.route.params.course}/module/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
 
@@ -51,10 +49,6 @@ const ModuleScreen= (props) => {
         title={item.title} order={item.order}/>
       );
     };
-
-
-
-
       return (
 
         <>
@@ -87,11 +81,11 @@ export default ModuleScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1, 
-    alignItems: 'center', 
-    justifyContent: 'center'
+
+
   },
   image: {
     flex: 1,
-    justifyContent: "center"
+
   },
 });

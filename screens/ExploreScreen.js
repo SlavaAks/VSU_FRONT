@@ -38,10 +38,11 @@ const ExploreScreen = (props) => {
 
     const EnrollCours=(item)=>{
       $api.post(`api/student/course/${item.id}/`).
-      then(resp=>{console.log(resp.data);}).
+      then(resp=>{console.log(resp.data);    
+        SearchCourse()
+        setRerender(!rerender)}).
       catch(err=>console.log(err))
-      SearchCourse()
-      setRerender(!rerender)
+
     }
       
     let listViewItemSeparator = () => {

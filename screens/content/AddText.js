@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
-import { View, Text, Button, StyleSheet,Alert,TouchableOpacity,TextInput } from 'react-native';
+import { View, Text, Button, StyleSheet,Alert,TouchableOpacity,TextInput,ScrollView } from 'react-native';
 import Mybutton from '../../components/Mybutton';
 import Mytextinput from '../../components/Mytextinput';
 import $api from '../../api/client';
 const AddText = (props) => {
-    const [title,setTitle]=useState()
-    const [text,setText]=useState()
+    const [title,setTitle]=useState('')
+    const [text,setText]=useState('')
 
 
    
@@ -19,13 +19,14 @@ const AddText = (props) => {
         $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>{
             Alert.alert(
                 'Success','Контент добавлен ',
-                [{ text: 'Ok',onPress: () => props.navigation.goBack(),},],{cancelable: false},);
+                [{ text: 'Ok',onPress: () => props.navigation.navigate("ContentScreenTeacher",{"module":props.module}),},],{cancelable: false},);
         }).catch(err=>console.log(err))
 
     }
 
     return ( 
-      <View style={styles.container}>
+      // <View style={styles.container}>
+      <ScrollView style={styles.container}>
       <TextInput
         placeholder="title"
         textBreakStrategy="simple"
@@ -46,34 +47,12 @@ const AddText = (props) => {
       <TouchableOpacity onPress={TextContentCreate} style={styles.button}>
         <Text style={styles.save}>Save</Text>
       </TouchableOpacity>
-    </View>
+    </ScrollView>
+    // </View>
     
     
     
-  //   <View style={styles.container}>
 
-  //      <Mytextinput
-  //               placeholder="Teмa"
-  //               onChangeText={(Texts) => setTitle(Texts)}
-  //               value={title}
-  //               maxLength={225}
-  //               numberOfLines={5}
-  //               multiline={true}
-  //               style={{textAlignVertical: 'top', padding: 10}}
-  //             />
-     
-  //      <Mytextinput
-  //           placeholder="Контент"
-  //           onChangeText={(Texts) => setText(Texts)}
-  //           value={text}
-  //           maxLength={225}
-  //           numberOfLines={5}
-  //           multiline={true}
-  //           style={{ textAlignVertical: 'top', padding: 10 }} />
-
-
-  //  <Mybutton title="save" customClick={TextContentCreate}/>
-  //     </View>
     );
 };
 
@@ -81,7 +60,7 @@ export default AddText;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    // flex: 1,
     width:"100%",
     backgroundColor: "rgba(155,155,155,1)"
   },
@@ -102,9 +81,8 @@ const styles = StyleSheet.create({
     flex:20,
     width:"80%",
     margin:"5%",
-    // width:"60%",
-    // height:"80%",
-    lineHeight: 16,
+    textAlignVertical: 'top',
+
     fontSize: 17,
     // textAlign: "center",
     backgroundColor: "#fff",

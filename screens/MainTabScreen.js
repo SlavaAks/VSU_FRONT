@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState,useEffect} from 'react';
 
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import HomeScreen from './HomeScreen';
-import DetailsScreen from './DetailsScreen';
+import NotificationScreen from './NotificationScreen';
 import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
 import CourseScreenMine from './CourseScreenMine';
@@ -17,6 +17,7 @@ import {View} from 'react-native-animatable';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {useTheme, Avatar} from 'react-native-paper';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const HomeStack = createStackNavigator();
 const DetailsStack = createStackNavigator();
@@ -26,7 +27,7 @@ const ProfileStack = createStackNavigator();
 const Tab = createMaterialBottomTabNavigator();
 
 const MainTabScreen = (props) => {
-  console.log(props.route.params.role)
+  
   return(
     <Tab.Navigator
       initialRouteName="Home"
@@ -58,7 +59,7 @@ const MainTabScreen = (props) => {
       />)}
       <Tab.Screen
         name="Details"
-        component={DetailsScreen}
+        component={NotificationStackScreen}
         options={{
           tabBarLabel: 'Обновления',
           tabBarColor: '#1f65ff',
@@ -99,6 +100,18 @@ export default MainTabScreen;
 
 const HomeStackScreen = ({navigation}) => {
   const {colors} = useTheme();
+  const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" "})
+
+ useEffect(()=>{AsyncStorage.getItem('userData').then((userData) => {
+     
+  if(userData){
+      setUserdata(JSON.parse(userData));
+
+  }
+});},[AsyncStorage]);
+
+      
+  console.log(userdata.avatar)
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -144,8 +157,7 @@ const HomeStackScreen = ({navigation}) => {
                 }}>
                 <Avatar.Image
                   source={{
-                    uri:
-                      'https://api.adorable.io/avatars/80/abott@adorable.png',
+                    uri:userdata.avatar ,
                   }}
                   size={30}
                 />
@@ -154,25 +166,6 @@ const HomeStackScreen = ({navigation}) => {
           ),
         }}
       />
-      {/* <HomeStack.Screen 
-        name="CardListScreen"
-        component={CardListScreen}
-        options={({route}) => ({
-          title: route.params.title,
-          headerBackTitleVisible: false
-        })}
-      />
-      <HomeStack.Screen 
-        name="CardItemDetails"
-        component={CardItemDetails}
-        options={({route}) => ({
-          // title: route.params.title,
-          headerBackTitleVisible: false,
-          headerTitle: false,
-          headerTransparent: true,
-          headerTintColor: '#fff'
-        })}
-      /> */}
     </HomeStack.Navigator>
   );
 };

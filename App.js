@@ -208,13 +208,13 @@ Drawer.navigationOptions = {
 
            <Drawer.Screen name="HomeDrawer"   component={MainTabScreen }   options={{headerShown: false}} initialParams={{role: JSON.parse(loginState.user).groups[0]}} />
            <Drawer.Screen name="CourseScreen" component={CourseScreenMine} options={{headerShown: false}} />
-           <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher}/>
+           <Drawer.Screen name="ModuleScreenTeacher" component={ModuleScreenTeacher} options={{headerShown: false}} />
            <Drawer.Screen name="ModuleScreen" component={ModuleScreen}/>
            <Drawer.Screen name="AllCoursesScreen" component={AllCoursesScreen}/>
            <Drawer.Screen name="ContentScreenTeacher" component={AddContenScreen}/>
            <Drawer.Screen name="ContentCreateScreen" component={ContentCreateScreen}/>
            <Drawer.Screen name="ContentScreen" component={ContentScreen}/>
-           <Drawer.Screen name="SupportScreen" component={SupportScreen} />
+           <Drawer.Screen name="SupportScreen" component={SupportScreen} options={{headerShown: false}}/>
            <Drawer.Screen name="SettingsScreen" component={SettingsScreen} />
            <Drawer.Screen name="BookmarkScreen" component={BookmarkScreen} />
          </Drawer.Navigator>

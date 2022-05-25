@@ -1,20 +1,22 @@
-import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList} from 'react-native';
+import React, { useEffect,useState,useCallback } from 'react';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList,RefreshControl} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
-import Mybutton from '../components/Mybutton';
-import Mytextinput from '../components/Mytextinput';
-
-import Icon from 'react-native-vector-icons/FontAwesome';
-import { IconButton, Colors } from 'react-native-paper';
 import CourseButton from '../components/CourseButton';
-import ModuleScreen from './ModuleScreen';
 
+const wait = (timeout) => {
+  return new Promise(resolve => setTimeout(resolve, timeout));
+}
 
 const HomeScreen = (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
+    const [refreshing, setRefreshing] = React.useState(false);
 
+    const onRefresh = React.useCallback(() => {
+      setRefreshing(true);
+      wait(1000).then(() => setRefreshing(false));
+    }, []);
 
 
     useEffect(()=>{
@@ -54,12 +56,18 @@ const HomeScreen = (props) => {
       <View style={styles.container}>
         {/* <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}> */}
         <SafeAreaView>
-
+          
                 <FlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={ listItemView}
+                  refreshControl={
+                    <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
+                  }
                   />
         </SafeAreaView>
         </View>
