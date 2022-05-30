@@ -59,27 +59,27 @@ const AddContenScreen = (props) => {
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="text"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"text",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('Creation', {content_type:"text",module:props.route.params.module})}
             />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="file"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"file",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('Creation', {content_type:"file",module:props.route.params.module})}
          />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="video"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"video",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('Creation', {content_type:"video",module:props.route.params.module})}
           />
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="image"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"image",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('Creation', {content_type:"image",module:props.route.params.module})}
           ></CupertinoButtonPurple>
           <CupertinoButtonPurple
             style={styles.cupertinoButtonPurple}
             title="test"
-            AddCont={() => props.navigation.navigate('ContentCreateScreen', {content_type:"test",module:props.route.params.module})}
+            AddCont={() => props.navigation.navigate('Creation', {content_type:"test",module:props.route.params.module})}
           />
         </View>
       </View>

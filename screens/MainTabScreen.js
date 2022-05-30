@@ -12,15 +12,24 @@ import ExploreScreen from './ExploreScreen';
 import ProfileScreen from './ProfileScreen';
 import CourseScreenMine from './CourseScreenMine';
 import EditProfileScreen from './EditeProfileScreen';
+import ModuleScreenTeacher from './ModuleScreenTeacher';
+import AddContenScreen from './content/AddContentScreen';
+import ContentCreateScreen from './content/ContentCreateScreen';
+import AllCourses from './AllCourses';
+import ModuleScreen from './ModuleScreen';
+
 
 import {View} from 'react-native-animatable';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
 import {useTheme, Avatar} from 'react-native-paper';
 import AsyncStorage from '@react-native-community/async-storage';
+import ContentScreen from './ContentScreen';
+
 
 const HomeStack = createStackNavigator();
-const DetailsStack = createStackNavigator();
+const ExploreStack=createStackNavigator();
+const CourseStack = createStackNavigator();
 const NotificationStack = createStackNavigator();
 const ProfileStack = createStackNavigator();
 
@@ -46,8 +55,8 @@ const MainTabScreen = (props) => {
           ),
         }}
       />):(<Tab.Screen
-        name="Home"
-        component={CourseScreenMine}
+        name="TeacherHome"
+        component={CourseStackScreen}
         navigationOptions={{ header: null }}
         options={{
           tabBarLabel: 'Главная',
@@ -82,7 +91,7 @@ const MainTabScreen = (props) => {
       />
       <Tab.Screen
         name="Explore"
-        component={ExploreScreen}
+        component={ExploreStackScreen}
         navigationOptions={{ header: null }}
         options={{
           tabBarLabel: 'Поиск',
@@ -98,6 +107,37 @@ const MainTabScreen = (props) => {
 export default MainTabScreen;
 
 
+
+const ExploreStackScreen=({navigation}) => ( <ExploreStack.Navigator>
+  
+  <ExploreStack.Screen
+  options={{headerShown: false}}
+    name="ExploreScreen"
+    component={ExploreScreen}
+  />
+  <ExploreStack.Screen
+    name="Courses"
+    component={AllCourses}
+    options={{
+      headerLeft: () => (
+        <Icon.Button
+          name="arrow-back"
+          size={40}
+          color="#1f65ff"
+          backgroundColor="#ffff"
+          onPress={() =>{navigation.navigate("ExploreScreen")}}
+          // onPress={() => console.log("lll")}
+        />
+      ),
+    }}
+  />
+
+
+</ExploreStack.Navigator>)
+
+
+
+
 const HomeStackScreen = ({navigation}) => {
   const {colors} = useTheme();
   const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" "})
@@ -111,7 +151,6 @@ const HomeStackScreen = ({navigation}) => {
 });},[AsyncStorage]);
 
       
-  console.log(userdata.avatar)
   return (
     <HomeStack.Navigator
       screenOptions={{
@@ -166,22 +205,94 @@ const HomeStackScreen = ({navigation}) => {
           ),
         }}
       />
+      <HomeStack.Screen
+      name="ModuleStudent"
+      component={ModuleScreen}
+      options={{
+        title:"Modules",}}
+
+    />
+
+<HomeStack.Screen
+      name="ContentStudent"
+      component={ContentScreen}
+      options={{
+        title:"Content",}}
+    />
     </HomeStack.Navigator>
   );
+
+
 };
 
 
-const NotificationStackScreen = ({navigation}) => (
+const CourseStackScreen=({navigation})=>(
+
+  <CourseStack.Navigator
+    initialRouteName="TeacherHome">
+    <CourseStack.Screen
+    options={{headerShown: false}}
+      name="TeacherHome"
+      component={CourseScreenMine}
+    />
+    <CourseStack.Screen
+      options={{headerShown: false}}
+      name="ModuleScreenTeacher"
+      component={ModuleScreenTeacher}
+    />
+    <CourseStack.Screen
+      name="Content"
+      component={AddContenScreen}
+      options={{
+        headerLeft: () => (
+          <Icon.Button
+            name="arrow-back"
+            size={40}
+            color="#1f65ff"
+            
+            backgroundColor="#ffff"
+            onPress={() => navigation.goBack()}
+          />
+        ),
+      }}
+    />
+
+  <CourseStack.Screen
+      name="Creation"
+      component={ContentCreateScreen}
+      options={{
+        headerLeft: () => (
+          <Icon.Button
+            name="arrow-back"
+            size={40}
+            color="#1f65ff"
+            backgroundColor="#ffff"
+            onPress={() => navigation.goBack()}
+          />
+        ),
+      }}
+    />
+
+  </CourseStack.Navigator>
+)
+
+
+
+const NotificationStackScreen = ({navigation}) =>{ 
+  const {colors} = useTheme();
+  return (
   <NotificationStack.Navigator
-    screenOptions={{
-      headerStyle: {
-        backgroundColor: '#1f65ff',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
-    }}>
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.background,
+          shadowColor: colors.background, // iOS
+          elevation: 0, // Android
+        },
+        headerTintColor: colors.text,
+        headerTitleStyle: {
+          fontWeight: 'bold',
+        },
+      }}>
     <NotificationStack.Screen
       name="Notifications"
       component={NotificationScreen}
@@ -190,14 +301,15 @@ const NotificationStackScreen = ({navigation}) => (
           <Icon.Button
             name="ios-menu"
             size={25}
-            backgroundColor="#1f65ff"
+            color={colors.text}
+            backgroundColor={colors.background}
             onPress={() => navigation.openDrawer()}
           />
         ),
       }}
     />
   </NotificationStack.Navigator>
-);
+);}
 
 const ProfileStackScreen = ({navigation}) => {
   const {colors} = useTheme();

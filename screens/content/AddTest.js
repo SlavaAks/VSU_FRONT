@@ -29,7 +29,7 @@ function AddTest(props) {
     data.append('answer',JSON.stringify(items));
     data.append('content_type',"test")
     $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>console.log(resp)).then(err=>console.log(err))
-    props.navigation.navigate("ContentScreenTeacher",{"module":props.module})
+    props.navigation.navigate("Content",{"module":props.module})
   }
 
   const correctAnswer=()=>{

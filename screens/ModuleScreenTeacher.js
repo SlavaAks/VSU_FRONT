@@ -10,7 +10,7 @@ import { IconButton, Colors } from 'react-native-paper';
 import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 import ModuleListItem from '../components/ModuleListItem';
-import CupertinoHeaderWithAddButton from '../components/HeaderAddButton';
+import CupertinoHeaderBackModules from '../components/CupertinoHeaderBackModules';
 
 const ModuleScreenTeacher = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -21,13 +21,11 @@ const ModuleScreenTeacher = (props) => {
     const [isvisible,setIsvisibnle]=useState(false)
 
 
-    useEffect(()=>{
-    console.log(1111)
-    console.log(props.route.params.course)
+    useEffect(()=>{ 
     const resp=$api.get(`api/course/${props.route.params.course}/module/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
-
-    },[rerender,props])
+    // },)
+    },[rerender])
 
 
     function DelClik(pk){
@@ -62,7 +60,7 @@ const ModuleScreenTeacher = (props) => {
       return (
          
          <ModuleListItem
-         Click={()=>props.navigation.navigate("ContentScreenTeacher",{"module":item.id})}
+         Click={()=>props.navigation.navigate("Content",{"module":item.id})}
         DelClik={()=>{DelClik(item.id)}} 
         drag={drag}
         title={item.title} order={item.order}/>
@@ -83,7 +81,7 @@ const ModuleScreenTeacher = (props) => {
         <>
          
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
-       <CupertinoHeaderWithAddButton title={"modules"} menu={()=>props.navigation.toggleDrawer()} onPress={() => setIsvisibnle(true)}/>
+        <CupertinoHeaderBackModules title={"modules"} back={()=>props.navigation.goBack()} onPress={() => setIsvisibnle(true)}/>
 
           <Modal visible={isvisible}>
                   <IconButton

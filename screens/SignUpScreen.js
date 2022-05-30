@@ -97,7 +97,13 @@ const SignInScreen = ({navigation}) => {
             ]);
             return;
         } else{
-            Alert.alert("Пользователь зарегестрирован, подтвердите вашу регистрацию на почте")
+            Alert.alert("Пользователь зарегестрирован", "подтвердите вашу регистрацию на почте", [
+                {text: 'Okay'},
+                {
+                    text: "Resend link",
+                    onPress: () => console.log("Resend link")
+                  },
+            ]);
             navigation.goBack()
         }
 

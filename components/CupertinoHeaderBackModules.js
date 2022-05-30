@@ -2,12 +2,12 @@ import React, { Component } from "react";
 import { StyleSheet, View, TouchableOpacity, Text } from "react-native";
 import IoniconsIcon from "react-native-vector-icons/Ionicons";
 
-function CupertinoHeaderWithAddButton(props) {
+function CupertinoHeaderBackModules(props) {
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.leftWrapper}>
-        <TouchableOpacity onPress={props.menu} style={styles.leftIconButton}>
-          <IoniconsIcon name="md-menu" style={styles.leftIcon}></IoniconsIcon>
+        <TouchableOpacity onPress={props.back} style={styles.leftIconButton}>
+          <IoniconsIcon name="arrow-back" style={styles.leftIcon}></IoniconsIcon>
         </TouchableOpacity>
       </View>
       <View style={styles.textWrapper}>
@@ -66,4 +66,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default CupertinoHeaderWithAddButton;
+export default CupertinoHeaderBackModules;

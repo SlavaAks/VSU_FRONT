@@ -59,7 +59,6 @@ const CourseScreenMine = (props) => {
   
     let listItemView = ({ item, drag, isActive }) => {
       // console.log(item.item.item)
-
       return (
         <CourseButtonEdite Click={()=>props.navigation.navigate("ModuleScreenTeacher",{"course":item.id})}
         DelClik={()=>{DelClik(item.id)}} 

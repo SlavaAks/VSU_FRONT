@@ -19,7 +19,7 @@ const AddText = (props) => {
         $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>{
             Alert.alert(
                 'Success','Контент добавлен ',
-                [{ text: 'Ok',onPress: () => props.navigation.navigate("ContentScreenTeacher",{"module":props.module}),},],{cancelable: false},);
+                [{ text: 'Ok',onPress: () => props.navigation.navigate("Content",{"module":props.module}),},],{cancelable: false},);
         }).catch(err=>console.log(err))
 
     }

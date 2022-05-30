@@ -25,7 +25,7 @@ const AddImage = (props) => {
         let res = $api.post(`api/course/module/${props.module}/content/`,data,config).then(
           res=>{ 
             Alert.alert('Upload Successful');
-           props.navigation.navigate("ContentScreenTeacher",{"module":props.module})
+           props.navigation.navigate("Content",{"module":props.module})
             }
           
         ).catch(err=>console.log(err))

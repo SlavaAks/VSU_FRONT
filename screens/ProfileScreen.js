@@ -138,6 +138,7 @@ export default ProfileScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "rgba(254,254,247,1)",
   },
   userInfoSection: {
     paddingHorizontal: 30,

@@ -28,11 +28,12 @@ const ExploreScreen = (props) => {
 
 
     let SearchCourse=async ()=>{
+    if(query!=''){
     let course_set=courses_all.filter(({ title }) =>title.includes(query))
     let course_mine_set=courses_mine.map(x=>x.id)
     course_set=course_set.filter(x =>{!console.log(course_mine_set) ;return !course_mine_set.includes(x.id)})
     setCourses(course_set)
-    setSwitcher(false)
+    setSwitcher(false)}
     }
 
 
@@ -59,7 +60,7 @@ const ExploreScreen = (props) => {
   
     let listItemViewSubjects = ({ item }) => {
       return (
-        <SubjectButton Click={()=>{props.navigation.navigate("AllCoursesScreen",{"subject":item.id})}}
+        <SubjectButton Click={()=>{props.navigation.navigate("Courses",{"subject":item.id})}}
         title={item.title}/>
       );
     };

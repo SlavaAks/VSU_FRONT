@@ -14,8 +14,8 @@ const HomeScreen = (props) => {
     const [refreshing, setRefreshing] = React.useState(false);
 
     const onRefresh = React.useCallback(() => {
-      setRefreshing(true);
-      wait(1000).then(() => setRefreshing(false));
+      setRefreshing(!refreshing);
+      wait(1000).then(() => setRefreshing(!refreshing));
     }, []);
 
 
@@ -41,7 +41,7 @@ const HomeScreen = (props) => {
     let listItemView = ({ item }) => {
 
       return (
-        <CourseButton Click={()=>props.navigation.navigate("ModuleScreen",{"course":item.id})}
+        <CourseButton Click={()=>props.navigation.navigate("ModuleStudent",{"course":item.id})}
         title={item.title} overview={item.overview}/>
       );
     };
@@ -56,7 +56,10 @@ const HomeScreen = (props) => {
       <View style={styles.container}>
         {/* <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}> */}
         <SafeAreaView>
-          
+        <RefreshControl
+                      refreshing={refreshing}
+                      onRefresh={onRefresh}
+                    />
                 <FlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}

@@ -45,7 +45,7 @@ const ModuleScreen= (props) => {
       return (
          
          <ModuleListItemStudent
-         Click={()=>props.navigation.navigate("ContentScreen",{"module":item.id})}
+         Click={()=>props.navigation.navigate("ContentStudent",{"module":item.id})}
         title={item.title} order={item.order}/>
       );
     };
