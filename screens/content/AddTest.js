@@ -128,7 +128,7 @@ const styles = StyleSheet.create({
   textInput: {
     fontFamily: "roboto-regular",
     color: "#121212",
-    height: 33,
+    height:37,
     width: 319,
     borderWidth: 1,
     borderColor: "rgba(250,0,4,1)",
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   placeholder: {
     fontFamily: "roboto-regular",
     color: "#121212",
-    height: 33,
+    height: 37,
     width: 319,
     borderWidth: 1,
     borderColor: "rgba(39,3,244,1)",

@@ -6,6 +6,7 @@ import {
   ImageBackground,
   TextInput,
   StyleSheet,
+  ScrollView,
 
 } from 'react-native';
 
@@ -137,6 +138,7 @@ const EditProfileScreen = (props) => {
 
   return (
     <View style={styles.container}>
+      <ScrollView>
       <BottomSheet
         ref={bs}
         snapPoints={[330, 0]}
@@ -291,6 +293,7 @@ const EditProfileScreen = (props) => {
           <Text style={styles.panelButtonTitle}>Submit</Text>
         </TouchableOpacity>
       </Animated.View>
+      </ScrollView>
     </View>
   );
 };

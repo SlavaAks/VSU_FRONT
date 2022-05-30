@@ -144,7 +144,7 @@ const ContentScreen = (props) => {
              <View key={item.id} style={{backgroundColor: 'white', padding: 20}}>
              <Text>{item.item.title}</Text>
              <TouchableOpacity style={styles.buttonFile} onPress={()=>downloadFile(item.item.item) }> 
-             <Icon name="file"  size={30}/>
+             <Icon name="file"  size={50}/>
              </TouchableOpacity>
              </View>
         }

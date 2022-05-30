@@ -55,7 +55,7 @@ const MainTabScreen = (props) => {
           ),
         }}
       />):(<Tab.Screen
-        name="TeacherHome"
+        name="Home"
         component={CourseStackScreen}
         navigationOptions={{ header: null }}
         options={{
@@ -229,10 +229,10 @@ const HomeStackScreen = ({navigation}) => {
 const CourseStackScreen=({navigation})=>(
 
   <CourseStack.Navigator
-    initialRouteName="TeacherHome">
+    initialRouteName="Home">
     <CourseStack.Screen
     options={{headerShown: false}}
-      name="TeacherHome"
+      name="Home"
       component={CourseScreenMine}
     />
     <CourseStack.Screen

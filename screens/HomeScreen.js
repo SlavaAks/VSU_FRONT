@@ -56,10 +56,6 @@ const HomeScreen = (props) => {
       <View style={styles.container}>
         {/* <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}> */}
         <SafeAreaView>
-        <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                    />
                 <FlatList
                   data={items}
                   ItemSeparatorComponent={listViewItemSeparator}

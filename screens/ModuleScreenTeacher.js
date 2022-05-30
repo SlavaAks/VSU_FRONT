@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground} from 'react-native';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,ScrollView} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import Mybutton from '../components/Mybutton';
@@ -11,6 +11,7 @@ import CourseButtonEdite from '../components/CourseButtonEdite';
 import DraggableFlatList, { RenderItemInfo, OnMoveEndInfo } from 'react-native-draggable-flatlist'
 import ModuleListItem from '../components/ModuleListItem';
 import CupertinoHeaderBackModules from '../components/CupertinoHeaderBackModules';
+
 
 const ModuleScreenTeacher = (props) => {
     const [rerender, setRerender] = useState(false);
@@ -84,6 +85,7 @@ const ModuleScreenTeacher = (props) => {
         <CupertinoHeaderBackModules title={"modules"} back={()=>props.navigation.goBack()} onPress={() => setIsvisibnle(true)}/>
 
           <Modal visible={isvisible}>
+            <ScrollView>
                   <IconButton
     icon="close"
   
@@ -115,6 +117,7 @@ const ModuleScreenTeacher = (props) => {
             style={{ textAlignVertical: 'top', padding: 10 }} />
 
           <Mybutton title="save" customClick={AddModule} />
+          </ScrollView>
         </Modal>
         <SafeAreaView>
 

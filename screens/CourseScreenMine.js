@@ -1,5 +1,5 @@
 import React, { useEffect,useState } from 'react';
-import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground} from 'react-native';
+import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,ScrollView} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
 import Mybutton from '../components/Mybutton';
@@ -80,6 +80,7 @@ const CourseScreenMine = (props) => {
         <ImageBackground source={require("../assets/VSU.png")}  resizeMode="cover" style={styles.image}>
         <CupertinoHeaderWithAddButton title={"courses"} menu={()=>props.navigation.toggleDrawer()} onPress={() => setIsvisibnle(true)}/>
         <Modal visible={isvisible}>
+        <ScrollView>
                   <IconButton
     icon="close"
   
@@ -119,6 +120,7 @@ const CourseScreenMine = (props) => {
             style={{ textAlignVertical: 'top', padding: 10 }} />
 
           <Mybutton title="save" customClick={AddCourse} />
+          </ScrollView>
         </Modal>
     <SafeAreaView>
        

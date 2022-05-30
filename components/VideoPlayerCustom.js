@@ -113,7 +113,7 @@ const VideoPlayer = (props) => {
         progress={currentTime}
         toolbar={renderToolbar()}
       />
-      <Modal visible={isFullScreen}>
+      {/* <Modal visible={isFullScreen}>
       <Video
         onEnd={onEnd}
         onLoad={onLoad}
@@ -132,8 +132,8 @@ const VideoPlayer = (props) => {
         // }}
         style={styles.mediaPlayer}
         volume={10}
-      />
-      <MediaControls
+      /> */}
+      {/* <MediaControls
         duration={duration}
         isLoading={isLoading}
         mainColor="#333"
@@ -146,7 +146,7 @@ const VideoPlayer = (props) => {
         progress={currentTime}
         toolbar={renderToolbar()}
       />
-      </Modal>
+      </Modal> */}
     </View>
   );
 };
