@@ -15,8 +15,23 @@ const ExploreScreen = (props) => {
     const [courses_all,setCourses_all]=useState()
     const [switcher,setSwitcher]=useState(true)
 
+
+
+    let SearchCourse=async ()=>{
+      if(query!=''){
+      let course_set=courses_all.filter(({ title }) =>title.includes(query))
+      let course_mine_set=courses_mine.map(x=>x.id)
+      course_set=course_set.filter(x =>{!console.log(course_mine_set) ;
+      return !course_mine_set.includes(x.id)})
+      setCourses(course_set)
+      setSwitcher(false)}
+      }
+
+
     useEffect(()=>{
       console.log("sss")
+      setQuery('')
+      setSwitcher(true)
       const resp=$api.get(`api/subject/`)
       resp.then(resp=>setSubject(resp.data)).catch(err=>console.log(err))
       $api.get("api/course/")
@@ -24,24 +39,24 @@ const ExploreScreen = (props) => {
       .catch(err => console.warn(err));
       $api.get(`api/student/course/`)
       .then(resp=>setCourses_mine(resp.data)).catch(err=>console.log(err))
-      },[rerender]) 
-
-
-    let SearchCourse=async ()=>{
-    if(query!=''){
-    let course_set=courses_all.filter(({ title }) =>title.includes(query))
-    let course_mine_set=courses_mine.map(x=>x.id)
-    course_set=course_set.filter(x =>{!console.log(course_mine_set) ;return !course_mine_set.includes(x.id)})
-    setCourses(course_set)
-    setSwitcher(false)}
+      SearchCourse()
     }
+      
+ ,[rerender]) 
 
+
+    
+ 
 
     const EnrollCours=(item)=>{
       $api.post(`api/student/course/${item.id}/`).
-      then(resp=>{console.log(resp.data);    
+      then(resp=>{console.log(resp.data); 
+        setRerender(!rerender)
         SearchCourse()
-        setRerender(!rerender)}).
+        // props.navigation.navigate("Home",{"rerender":"rerender"})
+        // SearchCourse();
+        
+      }).
       catch(err=>console.log(err))
 
     }

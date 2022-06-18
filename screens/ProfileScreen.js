@@ -37,7 +37,6 @@ const ProfileScreen = (props) => {
     const shareOptions = {
       message: 'Learn with this App. I\'ve join on different interesting courses.',
       url: files.appLogo,
-      // urls: [files.image1, files.image2]
     }
 
     try {

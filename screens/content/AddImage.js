@@ -63,7 +63,7 @@ const AddImage = (props) => {
     return ( 
     <View style={styles.container}>
       <View style={{flex:1}}>
-    <Text style={styles.videoTitle}>Video title:</Text>
+    <Text style={styles.videoTitle}>Image title:</Text>
     <TextInput
       placeholder=""
       textBreakStrategy="highQuality"

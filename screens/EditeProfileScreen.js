@@ -7,6 +7,7 @@ import {
   TextInput,
   StyleSheet,
   ScrollView,
+  Alert,
 
 } from 'react-native';
 
@@ -37,14 +38,14 @@ const EditProfileScreen = (props) => {
   const [rerender,setRerender]=useState(false)
   const [image, setImage] = useState();
   const {colors} = useTheme();
-  const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" "})
+  const [userdata,setUserdata]=useState({"id":" ","email":" ","first_name":" ","last_name":" ","date_joined":" ","city":" ","avatar":" ","country":" ","phone":""})
 
-  const [first_name,setFirst_name]=useState(userdata.first_name)
-  const [last_name,setLast_name]=useState(userdata.last_name)
-  const [phone,setPhone]=useState(userdata.phone)
-  const [email,setEmail]=useState(userdata.email)
-  const [city,setCity]=useState(userdata.city)
-  const [country,setCountry]=useState(userdata.country)
+  const [first_name,setFirst_name]=useState()
+  const [last_name,setLast_name]=useState()
+  const [phone,setPhone]=useState()
+  const [email,setEmail]=useState()
+  const [city,setCity]=useState()
+  const [country,setCountry]=useState()
 
 
   // JSON.parse(props.userdata)
@@ -53,7 +54,13 @@ const EditProfileScreen = (props) => {
       if(userData){
           console.log(userData)
           setUserdata(JSON.parse(userData));
-
+          setFirst_name(JSON.parse(userData).first_name)
+          setLast_name(JSON.parse(userData).last_name)
+          setCity(JSON.parse(userData).city)
+          setImage(JSON.parse(userData).avatar)
+          setCountry(JSON.parse(userData).country)
+          setPhone(JSON.parse(userData).phone)
+          setEmail(JSON.parse(userData).email)
       }
   });},[rerender,AsyncStorage,props]);
  
@@ -79,7 +86,7 @@ const EditProfileScreen = (props) => {
 
     $api.patch('user/',data).then(resp=>{console.log(resp);
       AsyncStorage.setItem("userData",JSON.stringify(resp.data));
-      setRerender(!rerender)}).catch(err=>console.log(err))
+      setRerender(!rerender)}).catch(err=>Alert.alert("Ошибка введенных данных"))
   }
 
   const takePhotoFromCamera = () => {
@@ -203,6 +210,7 @@ const EditProfileScreen = (props) => {
             placeholder="First Name"
             placeholderTextColor="#666666"
             autoCorrect={false}
+            value={first_name}
             onChangeText={(text)=>setFirst_name(text)}
             style={[
               styles.textInput,
@@ -216,6 +224,7 @@ const EditProfileScreen = (props) => {
           <FontAwesome name="user-o" color={colors.text} size={20} />
           <TextInput
             placeholder="Last Name"
+            value={last_name}
             placeholderTextColor="#666666"
             autoCorrect={false}
             onChangeText={(text)=>setLast_name(text)}
@@ -234,6 +243,7 @@ const EditProfileScreen = (props) => {
             placeholderTextColor="#666666"
             keyboardType="number-pad"
             autoCorrect={false}
+            value={Number(phone)}
             onChangeText={(text)=>setPhone(text)}
             style={[
               styles.textInput,
@@ -249,6 +259,7 @@ const EditProfileScreen = (props) => {
             placeholder="Email"
             placeholderTextColor="#666666"
             keyboardType="email-address"
+            value={email}
             onChangeText={(text)=>setEmail(text)}
             autoCorrect={false}
             style={[
@@ -265,6 +276,7 @@ const EditProfileScreen = (props) => {
             placeholder="Country"
             placeholderTextColor="#666666"
             autoCorrect={false}
+            value={country}
             onChangeText={(text)=>setCountry(text)}
             style={[
               styles.textInput,
@@ -278,6 +290,7 @@ const EditProfileScreen = (props) => {
           <Icon name="map-marker-outline" color={colors.text} size={20} />
           <TextInput
             placeholder="City"
+            value={city}
             placeholderTextColor="#666666"
             autoCorrect={false}
             onChangeText={(text)=>setCity(text)}

@@ -1,4 +1,5 @@
 import React, { useEffect,useState,useCallback } from 'react';
+import { useIsFocused } from '@react-navigation/native'
 import { View, Text, Button, StyleSheet ,SafeAreaView,Modal, Alert,ImageBackground,FlatList,RefreshControl} from 'react-native';
 // import { Modal } from 'react-native-paper';
 import $api from '../api/client';
@@ -11,18 +12,21 @@ const wait = (timeout) => {
 const HomeScreen = (props) => {
     const [rerender, setRerender] = useState(false);
     const [items,setItems]=useState([])
-    const [refreshing, setRefreshing] = React.useState(false);
+    // const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(() => {
-      setRefreshing(!refreshing);
-      wait(1000).then(() => setRefreshing(!refreshing));
-    }, []);
+    const isFocused = useIsFocused()
+
+    // const onRefresh = React.useCallback(() => {
+    //   setRefreshing(!refreshing);
+    //   wait(1000).then(() => setRefreshing(!refreshing));
+    // }, []);
 
 
     useEffect(()=>{
+    console.log("rerender")
     const resp=$api.get(`api/student/course/`)
     resp.then(resp=>setItems(resp.data)).catch(err=>console.log(err))
-    },[rerender])
+    },[rerender,isFocused])
 
 
    
@@ -61,12 +65,12 @@ const HomeScreen = (props) => {
                   ItemSeparatorComponent={listViewItemSeparator}
                   keyExtractor={(item, index) => index.toString()}
                   renderItem={ listItemView}
-                  refreshControl={
-                    <RefreshControl
-                      refreshing={refreshing}
-                      onRefresh={onRefresh}
-                    />
-                  }
+                  // refreshControl={
+                  //   // <RefreshControl
+                  //   //   refreshing={refreshing}
+                  //   //   onRefresh={onRefresh}
+                  //   // />
+                  // }
                   />
         </SafeAreaView>
         </View>

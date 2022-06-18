@@ -19,7 +19,7 @@ const ContentScreen = (props) => {
     useEffect(()=>{
     console.log(props.route.params.module)
     const resp=$api.get(`api/student/course/module/${props.route.params.module}/content/`)
-    resp.then(resp=>setItems(resp.data)).catch(err=>err=>console.log(err))
+    resp.then(resp=>setItems(resp.data)).catch(err=>{console.log(err);props.navigation.goBack()})
     // console.log(items)
     },[rerender,props])
 

@@ -94,7 +94,8 @@ const NotificationScreen = ({navigation}) => {
         style={[styles.rowFront, {height: rowHeightAnimatedValue}]}>
         <TouchableHighlight
           style={styles.rowFrontVisible}
-          onPress={EnrollCours(data.item)}
+          onPress={()=>{}}
+          //EnrollCours(data.item)
           underlayColor={'#aaa'}>
           <View>
             <Text style={styles.title} numberOfLines={1}>

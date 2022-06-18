@@ -8,7 +8,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
 
-export const API_URL = `https://djangodockerher.herokuapp.com/`
+export const API_URL = `http://10.0.2.2:8000/`
 
 const $api = axios.create({
     withCredentials: true,

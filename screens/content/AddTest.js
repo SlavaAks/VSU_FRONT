@@ -28,8 +28,8 @@ function AddTest(props) {
     data.append('title', title);
     data.append('answer',JSON.stringify(items));
     data.append('content_type',"test")
-    $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>console.log(resp)).then(err=>console.log(err))
-    props.navigation.navigate("Content",{"module":props.module})
+    $api.post(`api/course/module/${props.module}/content/`,data).then(resp=>{console.log(resp),props.navigation.navigate("Content",{"module":props.module})}).then(err=>console.log(err))
+    
   }
 
   const correctAnswer=()=>{
